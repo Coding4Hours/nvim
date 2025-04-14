@@ -2,19 +2,7 @@ return {
 	"stevearc/conform.nvim",
 	event = { "BufWritePre" },
 	cmd = { "ConformInfo" },
-	keys = {
-		{
-			"<leader>f",
-			function()
-				require("conform").format({ async = true })
-			end,
-			mode = "",
-			desc = "Format buffer",
-		},
-	},
 	opts = {
-
-		opts = {
   formatters_by_ft = {
     lua = { "stylua" },
     python = { "autopep8" }, -- switched from isort + black
@@ -62,4 +50,4 @@ return {
 		vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
 	end,
 }
-}}
+}

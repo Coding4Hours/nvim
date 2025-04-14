@@ -1,7 +1,7 @@
 -- ~/.config/nvim/lua/plugins/which-key.lua
 return {
   "folke/which-key.nvim",
-  event = { "BufReadPre", "BufNewFile" },
+  event = "VeryLazy",
   opts = {
     preset = "classic",
     icons = {
@@ -23,10 +23,12 @@ return {
       { "<leader>b", group = "Buffers" },
       { "<leader>bq", "<cmd>bdelete<cr>", desc = "Close buffer" },
       { "<leader>bn", "<cmd>enew<cr>", desc = "New buffer" },
- --     { "<leader>bb", "<cmd>lua require('fzf-lua').buffers()<cr>", desc = "View buffers" },
       { "<leader>bb", function() require("mini.pick").builtin.buffers() end, desc = "Switch buffer" },
+      { "<leader>f", "<cmd>lua require('conform').format({ async = true })<cr>", desc = "Format Buffer" },
 
 
+      { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
+      { "<leader>m", "<cmd>RenderMarkdown toggle<cr>", desc = "Render Markdown"},
       { "<leader>e", "<cmd>lua require('mini.files').open()<cr>", desc = "Explorer" },
 
     })
