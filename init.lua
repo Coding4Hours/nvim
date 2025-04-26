@@ -18,6 +18,9 @@ local lazy_config = require("config.lazy")
 
 require("lazy").setup({
 	{ import = "plugins" },
+  { import = "plugins.lang" },
+  { import = "plugins.ui" },
+  { import = "plugins.lsp" },
 }, lazy_config)
 
 vim.opt.tabstop = 2
