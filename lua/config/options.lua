@@ -1,2 +1,1 @@
-set laststatus=0
-set display-=msgsep
+vim.opt.laststatus = 0
