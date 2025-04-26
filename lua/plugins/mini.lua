@@ -1,19 +1,8 @@
 return {
-	-- {
-	--   "echasnovski/mini.completion",
-	--   event = "VeryLazy",
-	--   version = false,
-	--   config = function()
-	--     require("mini.completion").setup()
-	--   end,
-	-- },
 	{
 		"echasnovski/mini.icons",
-		event = "VeryLazy",
+		lazy = true,
 		version = false,
-		config = function()
-			require("mini.icons").setup()
-		end,
 	},
 	{
 		"echasnovski/mini.files",
@@ -21,11 +10,12 @@ return {
 		version = false,
 		config = function()
 			require("mini.files").setup()
+			require("mini.icons").setup()
 		end,
 	},
 	{
 		"echasnovski/mini.pairs",
-		event = "VeryLazy",
+		event = "InsertEnter",
 		version = false,
 		config = function()
 			require("mini.pairs").setup()
@@ -41,7 +31,7 @@ return {
 	},
 	{
 		"echasnovski/mini.comment",
-		event = "VeryLazy",
+		event = "InsertEnter",
 		version = false,
 		config = function()
 			require("mini.comment").setup()
@@ -49,10 +39,11 @@ return {
 	},
 	{
 		"echasnovski/mini.tabline",
-		event = "VeryLazy",
+		event = "BufReadPost", -- Load only after a real file is opened
 		version = false,
 		config = function()
 			require("mini.tabline").setup()
+			require("mini.icons").setup()
 		end,
 	},
 }
