@@ -2,6 +2,7 @@ return {
   'neovim/nvim-lspconfig',
   event = "BufReadPost",
   dependencies = {
+    'zeioth/garbage-day.nvim',
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
   },
@@ -32,4 +33,3 @@ return {
     end
   end,
 }
-

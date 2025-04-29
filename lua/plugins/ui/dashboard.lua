@@ -14,21 +14,20 @@ return {
 
     logo = string.rep("\n", 8) .. logo .. "\n\n"
 
-    local builtin = require('telescope.builtin')
-
     local opts = {
       theme = "doom",
       config = {
         header = vim.split(logo, "\n"),
         -- stylua: ignore
         center = {
-          { action = builtin.find_files, desc = " Find File", icon = " ", key = "f" },
+          { action = "Telescope find_files", desc = " Find File", icon = " ", key = "f" },
           { action = "ene | startinsert", desc = " New File", icon = " ", key = "n" },
-          { action = builtin.oldfiles, desc = " Recent Files", icon = " ", key = "r" },
-          { action = builtin.live_grep, desc = " Find Text", icon = " ", key = "g" },
-          { action = 'lua require("persistence").load({})', desc = " Restore Session", icon = " ", key = "s" },
+          { action = "Telescope old_files", desc = " Recent Files", icon = " ", key = "r" },
+          --    { action = "Telescope live_grep", desc = " Find Text", icon = " ", key = "g" },
+          { action = "Leet", desc = " Leetcode", icon = " ", key = "c" },
+          { action = 'require("persistence").load({})', desc = " Restore Session", icon = " ", key = "s" },
           { action = "Lazy", desc = " Lazy", icon = "󰒲 ", key = "l" },
-          { action = function() vim.api.nvim_input("<cmd>qa<cr>") end, desc = " Quit", icon = " ", key = "q" },
+          { action = "vim.api.nvim_input('<cmd>qa<cr>')", desc = " Quit", icon = " ", key = "q" },
         },
         footer = function()
           local stats = require("lazy").stats()

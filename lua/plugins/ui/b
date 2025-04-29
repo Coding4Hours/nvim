@@ -1,14 +1,16 @@
 return {
   "rebelot/heirline.nvim",
-  event = "BufReadPost",
+  event = "UiEnter",
   opts = function()
-    local conditions = require("heirline.conditions")
     local utils = require("heirline.utils")
+    local heirline = require("heirline")
+    local conditions = require("heirline.conditions")
+
+    vim.o.cmdheight = 0
+    vim.o.laststatus = 3 -- Ensure statusline is visible
 
     -- :highlight based on catppuccin.nvim
     local colors = {
-      fg = utils.get_highlight("Folded").fg,
-      bg = utils.get_highlight("EndOfBuffer").fg,
       black = utils.get_highlight("TabLineFill").bg,
       --black =  utils.get_highlight("ColorColumn").bg,
       red = utils.get_highlight("DiagnosticError").fg,
@@ -19,50 +21,42 @@ return {
       cyan = utils.get_highlight("Character").fg,
     }
 
-    local leftSeparator = {
-      provider = '',
-      hl = { fg = 'black' }
-    }
 
-    local rightSeparator = {
-      provider = '',
-      hl = { fg = 'black' }
-    }
 
     --  components
     local viMode = {
       init = function(self)
-        self.mode = vim.fn.mode(1)         -- :h mode()
+        self.mode = vim.fn.mode(1) -- :h mode()
       end,
       static = {
-        mode_names = {         -- :h mode()
-          n = 'N',             -- normal
+        mode_names = { -- :h mode()
+          n = 'N',     -- normal
           niI = 'Ni',
           niR = 'Nr',
           niV = 'Nv',
-          i = 'I',           -- insert
+          i = 'I', -- insert
           ic = 'Ic',
           ix = 'Ix',
-          R = 'R',           -- replace
+          R = 'R', -- replace
           Rc = 'Rc',
           Rx = 'Rx',
           Rv = 'Rv',
           Rvc = 'Rv',
           Rvx = 'Rv',
-          v = 'V',           -- visual
+          v = 'V', -- visual
           vs = 'V',
           V = 'V_',
           Vs = 'Vs',
           ["\22"] = "^V",
           ["\22s"] = "^V",
-          c = 'C',           -- command :
+          c = 'C', -- command :
           cv = 'Ex',
           ce = 'Ce',
-          no = 'O',           -- op
+          no = 'O', -- op
           nov = 'Ov',
           noV = 'oV',
           ["no\22"] = "O?",
-          r = "...",           -- app?
+          r = "...", -- app?
           rm = "M",
           ["r?"] = "?",
           ["!"] = "!",
@@ -75,7 +69,6 @@ return {
           v = 'magenta',
           V = 'magenta',
           c = 'cyan',
-          R = "orange",            -- app?
           r = "orange",
           ["!"] = "red",
           t = "red"
@@ -85,8 +78,8 @@ return {
         return " %2(" .. self.mode_names[self.mode] .. "%)"
       end,
       hl = function(self)
-        local mode = self.mode:sub(1, 1)         -- get only the first mode character
-        return { fg = self.mode_colors[mode], bg = 'black', bold = true, }
+        local mode = self.mode:sub(1, 1) -- get only the first mode character
+        return { fg = self.mode_colors[mode], bold = true, }
       end,
       update = {
         "ModeChanged",
@@ -101,7 +94,7 @@ return {
       provider = function()
         return string.lower(vim.bo.filetype)
       end,
-      hl = { fg = utils.get_highlight("Type").fg, bg = 'black', bold = true },
+      hl = { fg = utils.get_highlight("Type").fg, bold = true },
     }
 
     local Ruler_1 = {
@@ -111,13 +104,11 @@ return {
       -- %P = percentage through file of displayed window
       {
         provider = "%l",
-        hl = { fg = 'red', bg = 'black' }
       },
-      { provider = '  ', hl = { fg = 'cyan', bg = 'black' } },
+      { provider = "  ", hl = { fg = "cyan" } },
       {
         provider = "%2c",
-        hl = { fg = 'blue', bg = 'black' }
-      }
+      },
     }
 
     local Ruler_2 = {
@@ -127,43 +118,63 @@ return {
       -- %P = percentage through file of displayed window
       {
         provider = "%P",
-        hl = { fg = 'magenta', bg = 'black' }
       },
-      { provider = '  ', hl = { fg = 'cyan', bg = 'black' } },
+      { provider = "  ", hl = { fg = "cyan" } },
       {
         provider = "%2L",
-        hl = { fg = 'blue', bg = 'black' }
-      }
+      },
     }
 
+    vim.opt.showcmdloc = 'statusline'
+    local ShowCmd = {
+      condition = function()
+        return vim.o.cmdheight == 0
+      end,
+      provider = ":%3.5(%S%)",
+    }
+
+    local MacroRec = {
+      condition = function()
+        return vim.fn.reg_recording() ~= "" and vim.o.cmdheight == 0
+      end,
+      provider = " ",
+      hl = { fg = "orange", bold = true },
+      utils.surround({ "[", "]" }, nil, {
+        provider = function()
+          return vim.fn.reg_recording()
+        end,
+        hl = { fg = "green", bold = true },
+      }),
+      update = {
+        "RecordingEnter",
+        "RecordingLeave",
+      }
+    }
     -- ret widget
     return {
       opts = {
-        colors = colors
+        colors = colors,
       },
-      statusline = {       -- topbar
-        leftSeparator,
+      statusline = {
+        MacroRec,
         viMode,
-        rightSeparator,
         {
-          provider = "%=",           -- align right
+          provider = "%=",
         },
-        leftSeparator,
+        ShowCmd,
+        {
+          provider = "%=", -- align right
+        },
         FileType,
-        rightSeparator,
         {
-          provider = '  '
+          provider = "  ",
         },
-        leftSeparator,
         Ruler_1,
-        rightSeparator,
         {
-          provider = '  '
+          provider = "  ",
         },
-        leftSeparator,
         Ruler_2,
-        rightSeparator,
-      }
+      },
     }
-  end
+  end,
 }
