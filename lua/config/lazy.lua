@@ -1,13 +1,10 @@
+
 return {
-
-  defaults = {
-    lazy = true,
-    version = false,
-  },
-  checker = {
-    enabled = true,
-  },
-
+  defaults = { lazy = true },
+  install = { colorscheme = { "nvchad" } },
+  -- checker = {
+  --   enabled = true,
+  -- },
   ui = {
     icons = {
       ft = "",
@@ -16,7 +13,6 @@ return {
       not_loaded = "",
     },
   },
-
 
   performance = {
     rtp = {
@@ -49,6 +45,7 @@ return {
         "bugreport",
         "ftplugin",
       },
-    }
-  }
+    },
+  },
 }
+
