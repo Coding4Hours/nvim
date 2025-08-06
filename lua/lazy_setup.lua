@@ -10,12 +10,11 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	spec = {
+
 		{ import = "plugins" },
 
 		{ import = "extras.misc.wakatime" },
 		{ import = "extras.ai.windsurf" },
-		{ import = "extras.editor.mini-files" },
-		-- { import = "extras.ui.mini-starter" },
 		{ import = "extras.editor.obsidian" },
 		{ import = "extras.utils.ts-comments" },
 		{
