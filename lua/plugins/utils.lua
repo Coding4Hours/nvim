@@ -1,12 +1,8 @@
 return {
 	{
-		"folke/snacks.nvim",
+		"pteroctopus/faster.nvim",
 		event = "BufReadPre",
-		---@type snacks.Config
-		opts = {
-			bigfile = { enabled = true },
-			quickfile = { enabled = true },
-		},
+		opts = {},
 	},
 
 	{
@@ -17,7 +13,6 @@ return {
 			rename = { enabled = true },
 		},
 	},
-
 
 	{ "nvim-lua/plenary.nvim", lazy = true },
 }
