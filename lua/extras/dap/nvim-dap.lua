@@ -1,17 +1,35 @@
-return {
-    {
-    "mfussenegger/nvim-dap",
-    recommended = true,
-    desc = "Debugging support. Requires language specific adapters to be configured. (see lang extras)",
+---@param config {type?:string, args?:string[]|fun():string[]?}
+local function get_args(config)
+	local args = type(config.args) == "function" and (config.args() or {}) or config.args or {} --[[@as string[] | string ]]
+	local args_str = type(args) == "table" and table.concat(args, " ") or args --[[@as string]]
 
-    dependencies = {
-      "igorlfs/nvim-dap-view",
-      -- virtual text for the debugger
-      {
-        "theHamsta/nvim-dap-virtual-text",
-        opts = {},
-      },
-    },
+	config = vim.deepcopy(config)
+	---@cast args string[]
+	config.args = function()
+		local new_args = vim.fn.expand(vim.fn.input("Run with args: ", args_str)) --[[@as string]]
+		if config.type and config.type == "java" then
+			---@diagnostic disable-next-line: return-type-mismatch
+			return new_args
+		end
+		return require("dap.utils").splitstr(new_args)
+	end
+	return config
+end
+
+return {
+	{
+		"mfussenegger/nvim-dap",
+		recommended = true,
+		desc = "Debugging support. Requires language specific adapters to be configured. (see lang extras)",
+
+		dependencies = {
+			"rcarriga/nvim-dap-ui",
+			-- virtual text for the debugger
+			{
+				"theHamsta/nvim-dap-virtual-text",
+				opts = {},
+			},
+		},
 
     -- stylua: ignore
     keys = {
@@ -33,33 +51,68 @@ return {
       { "<leader>dt", function() require("dap").terminate() end, desc = "Terminate" },
       { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
     },
-    opts = {},
-  },
-	
-		{
-			"igorlfs/nvim-dap-view",
-			lazy = true,
-			cmd = { "DapViewOpen", "DapViewClose", "DapViewToggle", "DapViewWatch", "DapViewJump", "DapViewShow" },
-			opts = {
-				winbar = {
-					controls = {
-						enabled = true,
-					},
-				},
+
+		config = function()
+			-- load mason-nvim-dap here, after all adapters have been setup
+
+			vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
+
+			-- setup dap config by VsCode launch.json file
+			local vscode = require("dap.ext.vscode")
+			local json = require("plenary.json")
+			vscode.json_decode = function(str)
+				return vim.json.decode(json.json_strip_comments(str))
+			end
+		end,
+	},
+
+	-- fancy UI for the debugger
+	{
+		"rcarriga/nvim-dap-ui",
+		dependencies = { "nvim-neotest/nvim-nio" },
+    -- stylua: ignore
+    keys = {
+      { "<leader>du", function() require("dapui").toggle({ }) end, desc = "Dap UI" },
+      { "<leader>de", function() require("dapui").eval() end, desc = "Eval", mode = {"n", "v"} },
+    },
+		opts = {},
+		config = function(_, opts)
+			local dap = require("dap")
+			local dapui = require("dapui")
+			dapui.setup(opts)
+			dap.listeners.after.event_initialized["dapui_config"] = function()
+				dapui.open({})
+			end
+			dap.listeners.before.event_terminated["dapui_config"] = function()
+				dapui.close({})
+			end
+			dap.listeners.before.event_exited["dapui_config"] = function()
+				dapui.close({})
+			end
+		end,
+	},
+
+	-- mason.nvim integration
+	{
+		"jay-babu/mason-nvim-dap.nvim",
+		dependencies = "mason.nvim",
+		cmd = { "DapInstall", "DapUninstall" },
+		opts = {
+			-- Makes a best effort to setup the various debuggers with
+			-- reasonable debug configurations
+			automatic_installation = true,
+
+			-- You can provide additional configuration to the handlers,
+			-- see mason-nvim-dap README for more information
+			handlers = {},
+
+			-- You'll need to check that you have the required things installed
+			-- online, please don't ask me how to install them :)
+			ensure_installed = {
+				-- Update this to ensure that you have the debuggers for the langs you want
 			},
 		},
-	
-  
-  {
-    "jay-babu/mason-nvim-dap.nvim",
-    dependencies = "mason.nvim",
-    cmd = { "DapInstall", "DapUninstall" },
-    opts = {
-      automatic_installation = true,
-      handlers = {},
-      ensure_installed = {
-      },
-    },
-  },
-  
+		-- mason-nvim-dap is loaded when nvim-dap loads
+		config = function() end,
+	},
 }

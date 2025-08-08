@@ -44,6 +44,16 @@ map("n", "<leader>td", function()
 	end)
 end, { desc = "Run Command in All Tabs" })
 
+-- telescope
+map("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", { desc = "Grep" })
+map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "Buffers" })
+map("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "Files" })
+map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "Help" })
+map("n", "<leader>fm", "<cmd>Telescope marks<CR>", { desc = "Marks" })
+map("n", "<leader>ft", "<cmd>lua require('nvchad.themes').open()<cr>", { desc = "Themes" })
+map("n", "<leader>fd", "<cmd>Telescope diagnostics", { desc = "Diagnostics" })
+map("n", "ff", "<cmd>Telescope find_files<CR>", { desc = "Files" })
+
 -- Misc.
 map("n", "<F8>", "<cmd>Jaq<cr>", { noremap = true, silent = true })
 map("n", "r", "<C-r>")
@@ -51,3 +61,16 @@ map("n", "<C-c>", "<cmd>%y+<CR>", { desc = "general copy whole file" })
 map("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
 map("i", "<C-Backspace>", "<C-W>", { noremap = true, silent = true })
 map("n", ";", ":", { noremap = true })
+
+-- Code
+map("n", "<leader>ca", "<cmd>lua require('actions-preview').code_actions()<cr>", { desc = "Code Action" })
+map("n", "<leader>cg", "<cmd>Jaq<cr>", { desc = "Run" })
+map("n", "<leader>cr", "<cmd>lua vim.lsp.buf.rename()<cr>", { desc = "Rename" })
+
+-- Random stuff
+map("n", "<leader>/", "<cmd>lua Snacks.picker.grep()<cr>", { desc = "Grep" })
+map("n", "<leader>:", "<cmd>lua Snacks.picker.command_history()<cr>", { desc = "Command History" })
+
+map("n", "<C-/>", "<cmd>lua Snacks.terminal.open()<cr>", { desc = "Terminal" })
+map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
+map("n", "gr", "<cmd>Jaq<cr>", { desc = "Run" })

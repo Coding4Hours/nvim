@@ -14,25 +14,10 @@ require("lazy").setup({
 		{ import = "plugins" },
 
 		{ import = "extras.misc.wakatime" },
-		{ import = "extras.ai.windsurf" },
+		{ import = "extras.windsurf" },
 		{ import = "extras.editor.obsidian" },
 		{ import = "extras.utils.ts-comments" },
-		{
-			"dmtrKovalenko/fff.nvim",
-			build = "cargo build --release",
-			-- or if you are using nixos
-			-- build = "nix run .#release",
-			opts = {
-				-- pass here all the options
-			},
-			keys = {
-				{
-					"ff", -- try it if you didn't it is a banger keybinding for a picker
-					'<cmd>require("fff").find_files()<cr>', -- or find_in_git_root() if you only want git files
-					desc = "Open file picker",
-				},
-			},
-		},
+		{ import = "extras.dap.nvim-dap" },
 	},
 }, {
 	defaults = { lazy = true },

@@ -20,11 +20,11 @@ vim.g.loaded_spellfile_plugin = 1
 vim.g.loaded_man = 1
 vim.g.loaded_matchit = 1
 
---vim.g.base46_cache = vim.fn.stdpath("data") .. "/base46/"
+vim.g.base46_cache = vim.fn.stdpath("data") .. "/base46/"
 
 vim.g.mapleader = " "
 
-require("lazy_setup")
-require("config.options")
-require("config.autocmds")
-require("config.keymaps")
+require("configs.lazy_setup")
+require("options")
+require("autocmds")
+require("keymaps")
