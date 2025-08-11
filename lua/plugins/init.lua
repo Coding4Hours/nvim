@@ -1,4 +1,10 @@
 return {
+  {
+    'stevearc/oil.nvim',
+    opts = {},
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    event = "VimEnter",
+  },
   -- Blink.cmp
   {
     "Saghen/blink.cmp",
@@ -18,21 +24,7 @@ return {
       dofile(vim.g.base46_cache .. "statusline")
     end,
   },
-  {
-    "mfussenegger/nvim-lint",
-    event = "User FilePost",
-    config = function()
-      local lint = require("lint")
-      lint.linters_by_ft = {
-        markdown = { "markdownlint" },
-        go = { "golangci_lint" },
-        yaml = { "yamllint" },
-        toml = { "taplo" },
-      }
 
-      lint.try_lint()
-    end,
-  },
   -- lspconfig
   {
     "neovim/nvim-lspconfig",
@@ -55,12 +47,6 @@ return {
     "williamboman/mason-lspconfig.nvim",
     event = "User FilePost",
     opts = require("configs.mason"),
-  },
-
-  {
-    "aznhe21/actions-preview.nvim",
-    opts = {},
-    event = "LspAttach",
   },
   -- Colorscheme
   {
@@ -87,11 +73,8 @@ return {
     lazy = true,
   },
   {
-    "folke/snacks.nvim",
+    "stevearc/dressing.nvim",
     event = "User FilePost",
-    opts = {
-      input = { enabled = true },
-    },
   },
 
   {

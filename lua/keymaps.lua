@@ -27,8 +27,8 @@ map({ "n", "x" }, "X", '"_d')
 
 -- buffers
 map("n", "<leader>bn", "<cmd>enew<cr>", { desc = "New Buffer" })
-map("n", "<leader>bl", "<cmd>bnext<cr>", { desc = "Next Buffer" }) -- :bnext
-map("n", "<leader>bh", "<cmd>bprevious<cr>", { desc = "Previous Buffer" }) -- :bprevious
+map("n", "<leader>bl", "<cmd>bnext<cr>", { desc = "Next Buffer" })                               -- :bnext
+map("n", "<leader>bh", "<cmd>bprevious<cr>", { desc = "Previous Buffer" })                       -- :bprevious
 map("n", "<leader>bd", "<cmd>lua require('snacks').bufdelete()<cr>", { desc = "Delete Buffer" }) -- :bdelete
 
 -- tabs
@@ -37,11 +37,11 @@ map("n", "<leader>tl", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 map("n", "<leader>th", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 map("n", "<leader>tc", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 map("n", "<leader>td", function()
-	vim.ui.input({ prompt = ":" }, function(input)
-		if input and #input > 0 then
-			vim.cmd("tabdo " .. input)
-		end
-	end)
+  vim.ui.input({ prompt = ":" }, function(input)
+    if input and #input > 0 then
+      vim.cmd("tabdo " .. input)
+    end
+  end)
 end, { desc = "Run Command in All Tabs" })
 
 -- telescope
@@ -62,11 +62,6 @@ map("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
 map("i", "<C-Backspace>", "<C-W>", { noremap = true, silent = true })
 map("n", ";", ":", { noremap = true })
 
--- Code
-map("n", "<leader>ca", "<cmd>lua require('actions-preview').code_actions()<cr>", { desc = "Code Action" })
-map("n", "<leader>cg", "<cmd>Jaq<cr>", { desc = "Run" })
-map("n", "<leader>cr", "<cmd>lua vim.lsp.buf.rename()<cr>", { desc = "Rename" })
-
 -- Random stuff
 map("n", "<leader>/", "<cmd>lua Snacks.picker.grep()<cr>", { desc = "Grep" })
 map("n", "<leader>:", "<cmd>lua Snacks.picker.command_history()<cr>", { desc = "Command History" })
@@ -74,3 +69,16 @@ map("n", "<leader>:", "<cmd>lua Snacks.picker.command_history()<cr>", { desc = "
 map("n", "<C-/>", "<cmd>lua Snacks.terminal.open()<cr>", { desc = "Terminal" })
 map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
 map("n", "gr", "<cmd>Jaq<cr>", { desc = "Run" })
+
+
+map('n', 'q;', 'q:', { noremap = true })
+
+vim.api.nvim_create_autocmd('CmdwinEnter', {
+  pattern = ':',
+  callback = function()
+    map('n', '<CR>', function()
+      -- Execute and close
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", true, false, true), 'n', true)
+    end, { buffer = true })
+  end,
+})
