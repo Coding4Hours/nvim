@@ -24,7 +24,6 @@ return {
     config = function()
       local lint = require("lint")
       lint.linters_by_ft = {
-        lua = { "luacheck" },
         markdown = { "markdownlint" },
         go = { "golangci_lint" },
         yaml = { "yamllint" },
