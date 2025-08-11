@@ -5,6 +5,7 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     event = "VimEnter",
   },
+
   -- Blink.cmp
   {
     "Saghen/blink.cmp",
@@ -13,8 +14,11 @@ return {
     dependencies = {
       "mikavilpas/blink-ripgrep.nvim",
     },
-    opts = require("configs.cmp"),
+    opts = function()
+      require("configs.cmp")
+    end,
   },
+
   {
     "nvchad/ui",
     lazy = false,
@@ -29,9 +33,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     event = "User FilePost",
-    config = function()
-      require("configs.lspconfig").defaults()
-    end,
+    opts = {}
   },
 
   -- mason
@@ -77,17 +79,19 @@ return {
     event = "User FilePost",
   },
 
-  {
-    "hedyhli/outline.nvim",
-    keys = { { "<leader>cs", "<cmd>Outline<cr>", desc = "Toggle Outline" } },
-    cmd = "Outline",
-    opts = require("configs.outline"),
-  },
+  -- {
+  --   "hedyhli/outline.nvim",
+  --   keys = { { "<leader>cs", "<cmd>Outline<cr>", desc = "Toggle Outline" } },
+  --   cmd = "Outline",
+  --   opts = require("configs.outline"),
+  -- },
   {
     "folke/which-key.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons", opts = {} },
     event = "VeryLazy",
-    opts = require("configs.which-key"),
+    opts = function()
+      require("configs.which-key")
+    end
   },
 
   {
