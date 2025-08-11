@@ -6,22 +6,22 @@
 local M = {}
 
 M.base46 = {
-	theme = "tokyonight",
-	transparency = false,
+  theme = "tokyonight",
+  transparency = true,
 }
 
 M.tabufline = {
-	enabled = true,
-	lazyload = false,
+  enabled = true,
+  lazyload = false,
 }
 
 M.lsp = { signature = true }
 
 M.colorify = {
-	enabled = true,
-	mode = "virtual", -- fg, bg, virtual
-	virt_text = "󱓻 ",
-	highlight = { hex = true, lspvars = true },
+  enabled = true,
+  mode = "virtual", -- fg, bg, virtual
+  virt_text = "󱓻 ",
+  highlight = { hex = true, lspvars = true },
 }
 
 -- Enabling nvdash will cause problems on dashboard!

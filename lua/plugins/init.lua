@@ -27,6 +27,7 @@ return {
     lazy = true,
   },
 
+  { "nvim-lua/plenary.nvim", lazy = true },
 
    {
      'stevearc/oil.nvim',
@@ -84,12 +85,6 @@ return {
      event = "User FilePost",
    },
 
-   -- {
-   --   "hedyhli/outline.nvim",
-   --   keys = { { "<leader>cs", "<cmd>Outline<cr>", desc = "Toggle Outline" } },
-   --   cmd = "Outline",
-   --   opts = require("configs.outline"),
-   -- },
    {
      "folke/which-key.nvim",
      dependencies = { "nvim-tree/nvim-web-devicons", opts = {} },
@@ -111,15 +106,10 @@ return {
 
    {
      "nvim-telescope/telescope.nvim",
-     dependencies = {
-       "nvim-telescope/telescope-fzf-native.nvim",
-       build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
-     },
      cmd = "Telescope",
      opts = function()
        return require("configs.telescope")
      end,
    },
-  { "nvim-lua/plenary.nvim", lazy = true },
   { "echasnovski/mini.nvim", version = false, lazy = true },
 }
