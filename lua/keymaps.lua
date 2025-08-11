@@ -29,7 +29,7 @@ map({ "n", "x" }, "X", '"_d')
 map("n", "<leader>bn", "<cmd>enew<cr>", { desc = "New Buffer" })
 map("n", "<leader>bl", "<cmd>bnext<cr>", { desc = "Next Buffer" }) -- :bnext
 map("n", "<leader>bh", "<cmd>bprevious<cr>", { desc = "Previous Buffer" }) -- :bprevious
-map("n", "<leader>bc", "<cmd>lua require('snacks').bufdelete()<cr>", { desc = "Delete Buffer" }) -- :bdelete
+map("n", "<leader>bd", "<cmd>lua require('snacks').bufdelete()<cr>", { desc = "Delete Buffer" }) -- :bdelete
 
 -- tabs
 map("n", "<leader>tn", "<cmd>tabnew<cr>", { desc = "New Tab" })
@@ -51,7 +51,7 @@ map("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "Files" })
 map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "Help" })
 map("n", "<leader>fm", "<cmd>Telescope marks<CR>", { desc = "Marks" })
 map("n", "<leader>ft", "<cmd>lua require('nvchad.themes').open()<cr>", { desc = "Themes" })
-map("n", "<leader>fd", "<cmd>Telescope diagnostics", { desc = "Diagnostics" })
+map("n", "<leader>fd", "<cmd>Telescope diagnostics<CR>", { desc = "Diagnostics" })
 map("n", "ff", "<cmd>Telescope find_files<CR>", { desc = "Files" })
 
 -- Misc.

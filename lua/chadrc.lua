@@ -12,11 +12,7 @@ M.base46 = {
 
 M.tabufline = {
 	enabled = true,
-	lazyload = true,
-}
-
-M.nvdash = {
-	load_on_startup = false,
+	lazyload = false,
 }
 
 M.lsp = { signature = true }
@@ -30,11 +26,5 @@ M.colorify = {
 
 -- Enabling nvdash will cause problems on dashboard!
 -- M.nvdash = { load_on_startup = true }
-
--- M.ui = {
---       tabufline = {
---          lazyload = false
---      }
--- }
 
 return M

@@ -10,7 +10,7 @@ return {
 		},
 		{
 			"MeanderingProgrammer/render-markdown.nvim",
-			dependencies = { "echasnovski/mini.icons" },
+			dependencies = { "nvim-tree/nvim-web-devicons", opts = {} },
 			opts = {},
 		},
 	},
@@ -25,7 +25,7 @@ return {
 			},
 		},
 		templates = {
-		  subdir = "templates",
-	  },
-  },
+			subdir = "templates",
+		},
+	},
 }
