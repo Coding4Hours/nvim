@@ -31,13 +31,13 @@ return {
 
   {
     'stevearc/oil.nvim',
+    cmd = { "Oil" },
     opts = {
-  columns = {
-    "icon",
-    "size",
-  },
-    },
-    event = "VimEnter",
+      columns = {
+        "icon",
+        "size",
+      },
+    }
   },
 
   -- Blink.cmp
@@ -110,5 +110,20 @@ return {
       return require("configs.telescope")
     end,
   },
-  { "echasnovski/mini.nvim", version = false, lazy = true },
+  {
+    "windwp/nvim-autopairs",
+    opts = {
+      fast_wrap = {},
+      disable_filetype = { "TelescopePrompt", "vim" },
+    },
+  },
+  {
+    "echasnovski/mini.notify",
+    opts = {
+      lsp_progress = {
+        enable = false,
+      },
+    },
+    event = "User FilePost"
+  }
 }

@@ -33,25 +33,12 @@ autocmd({ "UIEnter", "BufReadPost", "BufNewFile" }, {
 autocmd("BufWritePre", {
   desc = "Automatically create parent directories if they don't exist when saving a file",
   callback = function(args)
-    vim.lsp.buf.format({ bufnr = args.buf, async = true })
+    vim.lsp.buf.format()
 
     local dir = vim.fn.fnamemodify(vim.uv.fs_realpath(args.match) or args.match, ":p:h")
     if vim.fn.isdirectory(dir) == 0 then
       vim.fn.mkdir(dir, "p")
     end
-  end,
-})
-
-autocmd("InsertEnter", {
-  desc = "setup",
-  callback = function()
-    require("mini.surround").setup({})
-    require("mini.pairs").setup({})
-    require("mini.notify").setup({
-      lsp_progress = {
-        enable = false,
-      },
-    })
   end,
 })
 

@@ -27,4 +27,8 @@ require("options")
 require("autocmds")
 require("keymaps")
 
-require("oil").open()
+
+
+    if vim.fn.argc() == 0 then
+    require("oil").open()
+    end
