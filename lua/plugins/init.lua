@@ -8,7 +8,14 @@ return {
       dofile(vim.g.base46_cache .. "statusline")
     end,
   },
-
+  {
+    "dstein64/vim-startuptime",
+    cmd = "StartupTime",
+  },
+  {
+    "ingur/floatty.nvim",
+    lazy = true,
+  },
   -- Colorscheme
   {
     "nvchad/base46",
@@ -28,13 +35,8 @@ return {
 
   {
     'stevearc/oil.nvim',
-    cmd = "Oil",
-    opts = {
-      columns = {
-        "icon",
-        "size",
-      },
-    }
+    event = "UiEnter",
+    opts = {}
   },
 
   -- Blink.cmp
@@ -85,14 +87,6 @@ return {
 
 
   {
-    "folke/which-key.nvim",
-    event = "VeryLazy",
-    opts = function()
-      return require("configs.which-key")
-    end
-  },
-
-  {
     "nvim-treesitter/nvim-treesitter",
     event = { "BufReadPost", "BufNewFile" },
     cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
@@ -119,11 +113,6 @@ return {
   },
   {
     "echasnovski/mini.notify",
-    opts = {
-      lsp_progress = {
-        enable = false,
-      },
-    },
     event = "User FilePost"
   }
 }

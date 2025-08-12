@@ -13,11 +13,8 @@ require("lazy").setup({
 
     { import = "plugins" },
 
-    { import = "extras.misc.wakatime" },
-    { import = "extras.windsurf" },
-    { import = "extras.editor.obsidian" },
-    { import = "extras.utils.ts-comments" },
-    { import = "extras.dap.nvim-dap" },
+    { import = "extras.wakatime" },
+    { import = "extras.nvim-dap" },
   },
 }, {
   defaults = { lazy = true },

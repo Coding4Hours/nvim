@@ -67,3 +67,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("n", "ra", function() require('nvchad.lsp.renamer')() end, { desc = "LSP: Rename" })
   end,
 })
+
+
+vim.api.nvim_create_autocmd('CmdwinEnter', {
+  pattern = ':',
+  callback = function()
+    map('n', '<CR>', function()
+      -- Execute and close
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", true, false, true), 'n', true)
+    end, { buffer = true })
+  end,
+})

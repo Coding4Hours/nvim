@@ -24,7 +24,7 @@ return {
     list = { selection = { auto_insert = false } },
   },
   sources = {
-    default = { "lsp", "ripgrep" },
+    default   = { "lsp", "ripgrep" },
     providers = {
       ripgrep = {
         module = "blink-ripgrep",

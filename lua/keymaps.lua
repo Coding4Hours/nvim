@@ -60,25 +60,22 @@ map("n", "r", "<C-r>")
 map("n", "<C-c>", "<cmd>%y+<CR>", { desc = "general copy whole file" })
 map("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
 map("i", "<C-Backspace>", "<C-W>", { noremap = true, silent = true })
+map("n", "<C-;>", ";", { noremap = true })
 map("n", ";", ":", { noremap = true })
 
 -- Random stuff
-map("n", "<leader>/", "<cmd>lua Snacks.picker.grep()<cr>", { desc = "Grep" })
-map("n", "<leader>:", "<cmd>lua Snacks.picker.command_history()<cr>", { desc = "Command History" })
+map("n", "<leader>/", "<cmd>Telescope live_grep<cr>", { desc = "Grep" })
 
-map("n", "<C-/>", "<cmd>lua Snacks.terminal.open()<cr>", { desc = "Terminal" })
 map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
-map("n", "gr", "<cmd>Jaq<cr>", { desc = "Run" })
-
 
 map('n', 'q;', 'q:', { noremap = true })
+map({ 'n', 'v' }, 'B', '0', { noremap = true })
+map({ 'n', 'v' }, 'E', '$', { noremap = true })
 
-vim.api.nvim_create_autocmd('CmdwinEnter', {
-  pattern = ':',
-  callback = function()
-    map('n', '<CR>', function()
-      -- Execute and close
-      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", true, false, true), 'n', true)
-    end, { buffer = true })
-  end,
-})
+vim.keymap.set('n', '<C-/>',
+  ':lua (function() if not _G.toggle_term then _G.toggle_term = require("floatty").setup() end _G.toggle_term.toggle() end)()<CR>',
+  { silent = true })
+
+vim.keymap.set('t', '<C-/>',
+  '<C-\\><C-n>:lua (function() if not _G.toggle_term then _G.toggle_term = require("floatty").setup() end _G.toggle_term.toggle() end)()<CR>',
+  { silent = true })
