@@ -26,3 +26,5 @@ require("configs.lazy_setup")
 require("options")
 require("autocmds")
 require("keymaps")
+
+require("oil").open()
