@@ -1,5 +1,5 @@
 return {
   'wakatime/vim-wakatime',
-  lazy = false,
+  event = "UIEnter",
   desc = "Track your coding time with WakaTime",
 }

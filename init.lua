@@ -26,9 +26,3 @@ require("configs.lazy_setup")
 require("options")
 require("autocmds")
 require("keymaps")
-
-
-
-    if vim.fn.argc() == 0 then
-    require("oil").open()
-    end

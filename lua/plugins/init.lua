@@ -1,9 +1,7 @@
 return {
-
   {
     "nvchad/ui",
-    lazy = false,
-    enabled = true,
+    event = "UIEnter",
     config = function()
       require("nvchad")
       dofile(vim.g.base46_cache .. "defaults")
@@ -15,7 +13,6 @@ return {
   {
     "nvchad/base46",
     lazy = true,
-    enabled = true,
     build = function()
       require("base46").load_all_highlights()
     end,
@@ -31,7 +28,7 @@ return {
 
   {
     'stevearc/oil.nvim',
-    cmd = { "Oil" },
+    cmd = "Oil",
     opts = {
       columns = {
         "icon",
@@ -49,7 +46,7 @@ return {
       "mikavilpas/blink-ripgrep.nvim",
     },
     opts = function()
-      require("configs.cmp")
+      return require("configs.cmp")
     end,
   },
   -- lspconfig
@@ -70,7 +67,9 @@ return {
   {
     "williamboman/mason-lspconfig.nvim",
     event = "User FilePost",
-    opts = require("configs.mason"),
+    opts = function()
+      return require("configs.mason")
+    end,
   },
 
 
@@ -89,7 +88,7 @@ return {
     "folke/which-key.nvim",
     event = "VeryLazy",
     opts = function()
-      require("configs.which-key")
+      return require("configs.which-key")
     end
   },
 
@@ -112,6 +111,7 @@ return {
   },
   {
     "windwp/nvim-autopairs",
+    event = "InsertEnter",
     opts = {
       fast_wrap = {},
       disable_filetype = { "TelescopePrompt", "vim" },
