@@ -29,7 +29,7 @@ map({ "n", "x" }, "X", '"_d')
 map("n", "<leader>bn", "<cmd>enew<cr>", { desc = "New Buffer" })
 map("n", "<leader>bl", "<cmd>bnext<cr>", { desc = "Next Buffer" })                               -- :bnext
 map("n", "<leader>bh", "<cmd>bprevious<cr>", { desc = "Previous Buffer" })                       -- :bprevious
-map("n", "<leader>bd", "<cmd>lua require('snacks').bufdelete()<cr>", { desc = "Delete Buffer" }) -- :bdelete
+map("n", "<leader>bd", "<cmd>bdelete!<cr>", { desc = "Delete Buffer" }) -- :bdelete
 
 -- tabs
 map("n", "<leader>tn", "<cmd>tabnew<cr>", { desc = "New Tab" })
@@ -56,7 +56,6 @@ map("n", "ff", "<cmd>Telescope find_files<CR>", { desc = "Files" })
 
 -- Misc.
 map("n", "<F8>", "<cmd>Jaq<cr>", { noremap = true, silent = true })
-map("n", "r", "<C-r>")
 map("n", "<C-c>", "<cmd>%y+<CR>", { desc = "general copy whole file" })
 map("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
 map("i", "<C-Backspace>", "<C-W>", { noremap = true, silent = true })
@@ -65,7 +64,9 @@ map("n", ";", ":", { noremap = true })
 
 -- Random stuff
 map("n", "<leader>/", "<cmd>Telescope live_grep<cr>", { desc = "Grep" })
-
+map("n", "U", "<C-r>", { desc = "Undo" })
+map("n", "<C-d>", "<C-d>zz", { desc = "PgDn" })
+map("n", "<C-u>", "<C-u>zz", { desc = "PgUp" })
 map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
 
 map('n', 'q;', 'q:', { noremap = true })

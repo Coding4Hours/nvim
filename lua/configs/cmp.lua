@@ -1,35 +1,21 @@
 dofile(vim.g.base46_cache .. "blink")
 
-return {
+local opts = {
+  snippets = { preset = "mini_snippets" },
+  cmdline = { enabled = true },
+  appearance = { nerd_font_variant = "normal" },
+  fuzzy = { implementation = "prefer_rust" },
+  sources = { default = { "lsp", "snippets", "buffer", "path" } },
+
   keymap = {
-    ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-    ["<C-e>"] = { "hide", "fallback" },
+    preset = "default",
     ["<CR>"] = { "accept", "fallback" },
-
-    ["<Tab>"] = { "snippet_forward", "fallback" },
-    ["<S-Tab>"] = { "snippet_backward", "fallback" },
-
-    ["<C-p>"] = { "select_prev", "fallback_to_mappings" },
-    ["<C-n>"] = { "select_next", "fallback_to_mappings" },
-
-    ["<C-b>"] = { "scroll_documentation_up", "fallback" },
-    ["<C-f>"] = { "scroll_documentation_down", "fallback" },
-
-    ["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
   },
-  cmdline = {
-    completion = { menu = { auto_show = false }, ghost_text = { enabled = false } },
-  },
+
   completion = {
-    list = { selection = { auto_insert = false } },
-  },
-  sources = {
-    default   = { "lsp", "ripgrep" },
-    providers = {
-      ripgrep = {
-        module = "blink-ripgrep",
-        name = "Ripgrep",
-      },
-    },
+    ghost_text = { enabled = true },
+    menu = require("nvchad.blink").menu,
   },
 }
+
+return opts
