@@ -27,9 +27,9 @@ map({ "n", "x" }, "X", '"_d')
 
 -- buffers
 map("n", "<leader>bn", "<cmd>enew<cr>", { desc = "New Buffer" })
-map("n", "<leader>bl", "<cmd>bnext<cr>", { desc = "Next Buffer" })                               -- :bnext
-map("n", "<leader>bh", "<cmd>bprevious<cr>", { desc = "Previous Buffer" })                       -- :bprevious
-map("n", "<leader>bd", "<cmd>bdelete!<cr>", { desc = "Delete Buffer" }) -- :bdelete
+map("n", "<leader>bl", "<cmd>bnext<cr>", { desc = "Next Buffer" })         -- :bnext
+map("n", "<leader>bh", "<cmd>bprevious<cr>", { desc = "Previous Buffer" }) -- :bprevious
+map("n", "<leader>bd", "<cmd>bdelete!<cr>", { desc = "Delete Buffer" })    -- :bdelete
 
 -- tabs
 map("n", "<leader>tn", "<cmd>tabnew<cr>", { desc = "New Tab" })
@@ -61,6 +61,8 @@ map("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
 map("i", "<C-Backspace>", "<C-W>", { noremap = true, silent = true })
 map("n", "<C-;>", ";", { noremap = true })
 map("n", ";", ":", { noremap = true })
+map("n", "/", ":%s/", { noremap = true })
+
 
 -- Random stuff
 map("n", "<leader>/", "<cmd>Telescope live_grep<cr>", { desc = "Grep" })

@@ -50,14 +50,6 @@ return {
           }
         end,
       },
-
-      -- {
-      --   "windwp/nvim-autopairs",
-      --   opts = {
-      --     fast_wrap = {},
-      --     disable_filetype = { "TelescopePrompt", "vim" },
-      --   },
-      -- },
     },
 
     opts_extend = { "sources.default" },
@@ -79,7 +71,7 @@ return {
 
   -- mason
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     cmd = { "Mason" },
     event = "User FilePost",
     opts = {},
@@ -87,7 +79,7 @@ return {
 
   -- mason-lspconfig
   {
-    "williamboman/mason-lspconfig.nvim",
+    "mason-org/mason-lspconfig.nvim",
     event = "User FilePost",
     opts = function()
       return require("configs.mason")
