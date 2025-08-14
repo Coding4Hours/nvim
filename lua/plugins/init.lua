@@ -1,7 +1,8 @@
 return {
+
   {
     "nvchad/ui",
-    event = "UIEnter",
+    event = "UiEnter",
     config = function()
       require("nvchad")
       dofile(vim.g.base46_cache .. "defaults")
@@ -50,13 +51,13 @@ return {
         end,
       },
 
-      {
-        "windwp/nvim-autopairs",
-        opts = {
-          fast_wrap = {},
-          disable_filetype = { "TelescopePrompt", "vim" },
-        },
-      },
+      -- {
+      --   "windwp/nvim-autopairs",
+      --   opts = {
+      --     fast_wrap = {},
+      --     disable_filetype = { "TelescopePrompt", "vim" },
+      --   },
+      -- },
     },
 
     opts_extend = { "sources.default" },
@@ -107,7 +108,7 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter",
-    event = { "BufReadPost", "BufNewFile" },
+    event = "User FilePost",
     cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     build = ":TSUpdate",
     config = function()

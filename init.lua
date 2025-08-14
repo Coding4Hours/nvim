@@ -40,10 +40,10 @@ local disabled_builtins = {
   "spell",
   "usr_42",
 }
-
 for _, plugin in ipairs(disabled_builtins) do
   vim.g["loaded_" .. plugin] = 1
 end
+
 
 
 vim.g.base46_cache = vim.fn.stdpath("data") .. "/base46/"
@@ -90,3 +90,27 @@ vim.defer_fn(function()
 end, 50)
 
 
+-- Minimal autopairs for ()
+local function autopairs_open(pair)
+  local close = pair == '(' and ')' or pair == '[' and ']' or pair == '{' and '}' or pair
+  return pair .. close .. "<Left>"
+end
+
+local function autopairs_close(pair)
+  local col = vim.fn.col('.') - 1
+  local line = vim.fn.getline('.')
+  if line:sub(col + 1, col + 1) == pair then
+    return "<Right>"
+  else
+    return pair
+  end
+end
+
+-- Mappings
+vim.keymap.set('i', '(', function() return autopairs_open('(') end, { expr = true })
+vim.keymap.set('i', '[', function() return autopairs_open('[') end, { expr = true })
+vim.keymap.set('i', '{', function() return autopairs_open('{') end, { expr = true })
+
+vim.keymap.set('i', ')', function() return autopairs_close(')') end, { expr = true })
+vim.keymap.set('i', ']', function() return autopairs_close(']') end, { expr = true })
+vim.keymap.set('i', '}', function() return autopairs_close('}') end, { expr = true })
