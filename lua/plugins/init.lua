@@ -1,5 +1,4 @@
 return {
-
   {
     "nvchad/ui",
     event = "UiEnter",
@@ -51,8 +50,6 @@ return {
         end,
       },
     },
-
-    opts_extend = { "sources.default" },
 
     opts = function()
       return require "configs/cmp"

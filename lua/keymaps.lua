@@ -61,7 +61,6 @@ map("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
 map("i", "<C-Backspace>", "<C-W>", { noremap = true, silent = true })
 map("n", "<C-;>", ";", { noremap = true })
 map("n", ";", ":", { noremap = true })
-map("n", "/", ":%s/", { noremap = true })
 
 
 -- Random stuff
