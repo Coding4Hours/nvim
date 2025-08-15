@@ -1,4 +1,10 @@
 return {
+
+  {
+    "echasnovski/mini.starter",
+    event = "VimEnter",
+    opts = {},
+  },
   {
     "nvchad/ui",
     event = "UiEnter",
