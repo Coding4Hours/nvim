@@ -10,11 +10,11 @@ M.base46 = {
   transparency = true,
 }
 
-M.tabufline = {
-  enabled = true,
-  lazyload = false,
+M.ui = {
+  tabufline = {
+    lazyload = false,
+  }
 }
-
 M.lsp = { signature = true }
 
 M.colorify = {

@@ -75,9 +75,21 @@ map({ 'n', 'v' }, 'B', '0', { noremap = true })
 map({ 'n', 'v' }, 'E', '$', { noremap = true })
 
 vim.keymap.set('n', '<C-/>',
-  ':lua (function() if not _G.toggle_term then _G.toggle_term = require("floatty").setup() end _G.toggle_term.toggle() end)()<CR>',
+  ':lua require("nvchad.term").toggle { pos = "float", id = "floatTerm" }<CR>',
   { silent = true })
 
-vim.keymap.set('t', '<C-/>',
-  '<C-\\><C-n>:lua (function() if not _G.toggle_term then _G.toggle_term = require("floatty").setup() end _G.toggle_term.toggle() end)()<CR>',
-  { silent = true })
+
+map("n", "<tab>", function()
+  require("nvchad.tabufline").next()
+end, { desc = "buffer goto next" })
+
+map("n", "<S-tab>", function()
+  require("nvchad.tabufline").prev()
+end, { desc = "buffer goto prev" })
+
+
+map("n", "<leader>?", "<cmd>Telescope keymaps<CR>", { desc = "keymap help" })
+map("n", "<leader>ch", "<cmd>NvCheatsheet<CR>", { desc = "toggle nvcheatsheet" })
+
+map('n', ']b', '/\\v[{}\\[\\]]<CR>', { noremap = true, silent = true }) -- forward to any curly or square bracket
+map('n', '[b', '?\\v[{}\\[\\]]<CR>', { noremap = true, silent = true }) -- backward to any curly or square bracket

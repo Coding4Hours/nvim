@@ -1,10 +1,12 @@
 return {
 
+  { 'echasnovski/mini.doc',  lazy = true, version = false, opts = {} },
   {
-    "echasnovski/mini.starter",
-    event = "VimEnter",
-    opts = {},
+    "coding4hours/pairs.nvim",
+    event = "InsertEnter",
+    opts = {}
   },
+
   {
     "nvchad/ui",
     event = "UiEnter",
@@ -15,47 +17,21 @@ return {
     end,
   },
   {
-    "dstein64/vim-startuptime",
-    cmd = "StartupTime",
-  },
-  {
-    "ingur/floatty.nvim",
-    lazy = true,
-  },
-  -- Colorscheme
-  {
     "nvchad/base46",
     lazy = true,
     build = function()
       require("base46").load_all_highlights()
     end,
   },
-
-  -- Ui Library
   {
     "nvchad/volt",
     lazy = true,
   },
 
   { "nvim-lua/plenary.nvim", lazy = true },
-
-  -- Blink.cmp
   {
     "saghen/blink.cmp",
-    version = "1.*",
     event = { "InsertEnter", "CmdLineEnter" },
-
-    dependencies = {
-      {
-        "echasnovski/mini.snippets",
-        version = false,
-        opts = function()
-          return {
-            snippets = { require("mini.snippets").gen_loader.from_lang() },
-          }
-        end,
-      },
-    },
 
     opts = function()
       return require "configs/cmp"
@@ -63,7 +39,6 @@ return {
   },
 
 
-  -- lspconfig
   {
     "neovim/nvim-lspconfig",
     event = "User FilePost",
@@ -72,7 +47,6 @@ return {
     end,
   },
 
-  -- mason
   {
     "mason-org/mason.nvim",
     cmd = { "Mason" },
@@ -80,7 +54,6 @@ return {
     opts = {},
   },
 
-  -- mason-lspconfig
   {
     "mason-org/mason-lspconfig.nvim",
     event = "User FilePost",
@@ -90,7 +63,6 @@ return {
   },
 
 
-  -- Icons
   {
     "nvim-tree/nvim-web-devicons",
     event = "User FilePost",

@@ -86,29 +86,3 @@ vim.defer_fn(function()
   require("autocmds")
   require("keymaps")
 end, 50)
-
-
--- Minimal autopairs for ()
-local function autopairs_open(pair)
-  local close = pair == '(' and ')' or pair == '[' and ']' or pair == '{' and '}' or pair
-  return pair .. close .. "<Left>"
-end
-
-local function autopairs_close(pair)
-  local col = vim.fn.col('.') - 1
-  local line = vim.fn.getline('.')
-  if line:sub(col + 1, col + 1) == pair then
-    return "<Right>"
-  else
-    return pair
-  end
-end
-
--- Mappings
-vim.keymap.set('i', '(', function() return autopairs_open('(') end, { expr = true })
-vim.keymap.set('i', '[', function() return autopairs_open('[') end, { expr = true })
-vim.keymap.set('i', '{', function() return autopairs_open('{') end, { expr = true })
-
-vim.keymap.set('i', ')', function() return autopairs_close(')') end, { expr = true })
-vim.keymap.set('i', ']', function() return autopairs_close(']') end, { expr = true })
-vim.keymap.set('i', '}', function() return autopairs_close('}') end, { expr = true })
