@@ -7,7 +7,7 @@ local M = {}
 
 M.base46 = {
   theme = "kanagawa",
-  transparency = true,
+  transparency = false,
 }
 
 M.ui = {
@@ -15,6 +15,7 @@ M.ui = {
     lazyload = false,
   }
 }
+
 M.lsp = { signature = true }
 
 M.colorify = {

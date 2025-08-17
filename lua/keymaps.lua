@@ -50,8 +50,9 @@ map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "Buffers" })
 map("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "Files" })
 map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "Help" })
 map("n", "<leader>fm", "<cmd>Telescope marks<CR>", { desc = "Marks" })
-map("n", "<leader>ft", "<cmd>lua require('nvchad.themes').open()<cr>", { desc = "Themes" })
+map("n", "<leader>th", "<cmd>lua require('nvchad.themes').open()<cr>", { desc = "Themes" })
 map("n", "<leader>fd", "<cmd>Telescope diagnostics<CR>", { desc = "Diagnostics" })
+map("n", "<leader>ft", "<cmd>TodoTelescope<CR>", { desc = "Todos" })
 map("n", "ff", "<cmd>Telescope find_files<CR>", { desc = "Files" })
 
 -- Misc.
@@ -70,13 +71,10 @@ map("n", "<C-d>", "<C-d>zz", { desc = "PgDn" })
 map("n", "<C-u>", "<C-u>zz", { desc = "PgUp" })
 map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
 
-map('n', 'q;', 'q:', { noremap = true })
 map({ 'n', 'v' }, 'B', '0', { noremap = true })
 map({ 'n', 'v' }, 'E', '$', { noremap = true })
 
-vim.keymap.set('n', '<C-/>',
-  ':lua require("nvchad.term").toggle { pos = "float", id = "floatTerm" }<CR>',
-  { silent = true })
+
 
 
 map("n", "<tab>", function()
@@ -86,6 +84,27 @@ end, { desc = "buffer goto next" })
 map("n", "<S-tab>", function()
   require("nvchad.tabufline").prev()
 end, { desc = "buffer goto prev" })
+
+-- new terminals
+map("n", "<leader>h", function()
+  require("nvchad.term").new { pos = "sp" }
+end, { desc = "terminal new horizontal term" })
+
+map("n", "<leader>v", function()
+  require("nvchad.term").new { pos = "vsp" }
+end, { desc = "terminal new vertical term" })
+
+vim.keymap.set('n', '<C-/>',
+  ':lua require("nvchad.term").toggle { pos = "float", id = "floatTerm" }<CR>',
+  { silent = true })
+
+map({ "n", "t" }, "vt", function()
+  require("nvchad.term").toggle { pos = "vsp", id = "vtoggleTerm" }
+end, { desc = "terminal toggleable vertical term" })
+
+map({ "n", "t" }, "ht", function()
+  require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm" }
+end, { desc = "terminal toggleable horizontal term" })
 
 
 map("n", "<leader>?", "<cmd>Telescope keymaps<CR>", { desc = "keymap help" })

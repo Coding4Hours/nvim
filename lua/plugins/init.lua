@@ -1,8 +1,6 @@
 return {
-
-  { 'echasnovski/mini.doc',  lazy = true, version = false, opts = {} },
   {
-    "coding4hours/pairs.nvim",
+    "nvim4hours/pairs.nvim",
     event = "InsertEnter",
     opts = {}
   },
@@ -31,6 +29,8 @@ return {
   { "nvim-lua/plenary.nvim", lazy = true },
   {
     "saghen/blink.cmp",
+    build = "cargo build --release",
+    version = "1.*",
     event = { "InsertEnter", "CmdLineEnter" },
 
     opts = function()
@@ -41,7 +41,7 @@ return {
 
   {
     "neovim/nvim-lspconfig",
-    event = "User FilePost",
+    event = "UIEnter",
     config = function()
       require("configs.lspconfig").defaults()
     end,
@@ -50,13 +50,13 @@ return {
   {
     "mason-org/mason.nvim",
     cmd = { "Mason" },
-    event = "User FilePost",
+    event = "UIEnter",
     opts = {},
   },
 
   {
     "mason-org/mason-lspconfig.nvim",
-    event = "User FilePost",
+    event = "UIEnter",
     opts = function()
       return require("configs.mason")
     end,
@@ -65,7 +65,7 @@ return {
 
   {
     "nvim-tree/nvim-web-devicons",
-    event = "User FilePost",
+    event = "UIEnter",
     opts = function()
       dofile(vim.g.base46_cache .. "devicons")
       return { override = require("nvchad.icons.devicons") }
@@ -75,16 +75,26 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter",
-    event = "User FilePost",
+    branch = "main",
+    event = "UIEnter",
     cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     build = ":TSUpdate",
-    config = function()
-      require("nvim-treesitter.configs").setup(require("configs.treesitter"))
+    opts = function()
+      return require("configs.treesitter")
     end,
   },
 
   {
     "nvim-telescope/telescope.nvim",
+    dependencies = {
+      {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        build = 'make',
+        config = function()
+          require('telescope').load_extension('fzf')
+        end
+      }
+    },
     cmd = "Telescope",
     opts = function()
       return require("configs.telescope")
