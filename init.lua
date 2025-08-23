@@ -1,99 +1,85 @@
-local disabled_builtins = {
-  -- "netrw",
-  -- "netrwPlugin",
-  "netrwSettings",
-  "netrwFileHandlers",
-  "gzip",
-  "zip",
-  "zipPlugin",
-  "tar",
-  "tarPlugin",
-  "getscript",
-  "getscriptPlugin",
-  "vimball",
-  "vimballPlugin",
-  "matchit",
-  "matchparen",
-  "logipat",
-  "rrhelper",
-  "spellfile_plugin",
-  "2html_plugin",
-  "tohtml",
-  "tutor",
-  "rplugin",
-  "synmenu",
-  "syntax",
-  "synload",
-  "syncolor",
-  "man",
-  "vimrc",
-  "zipPlugin",
-  "health",
-  "shada",
-  "shada_plugin",
-  "compiler",
-  "bugreport",
-  "ftplugin",
-  "indent",
-  "scripts",
-  "spellfile",
-  "spell",
-  "usr_42",
-}
-for _, plugin in ipairs(disabled_builtins) do
-  vim.g["loaded_" .. plugin] = 1
+for _, path in ipairs(vim.api.nvim_get_runtime_file('', true)) do
+  local plugin_dir = path .. '/plugin'
+  if vim.fn.isdirectory(plugin_dir) == 1 then
+    for _, filepath in ipairs(vim.fn.glob(plugin_dir .. '/*.vim', true, true)) do
+      local plugin_name = vim.fn.fnamemodify(filepath, ':t:r')
+      vim.g['loaded_' .. plugin_name] = 1
+    end
+  end
 end
 
+--==============================================================================
+-- Mini.deps
+--==============================================================================
+
+local path_package = vim.fn.stdpath("data") .. "/site/"
+local mini_path = path_package .. "pack/deps/start/mini.nvim"
+if not vim.uv.fs_stat(mini_path) then
+  vim.cmd('echo "Installing `mini.nvim`" | redraw')
+  local clone_cmd = { "git", "clone", "--filter=blob:none", "https://github.com/echasnovski/mini.nvim", mini_path }
+  vim.fn.system(clone_cmd)
+  vim.cmd("packadd mini.nvim | helptags ALL")
+  vim.cmd('echo "Installed `mini.nvim`" | redraw')
+end
+
+require("mini.deps").setup({ path = { package = path_package } })
+
+local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
 
-vim.g.base46_cache = vim.fn.stdpath("data") .. "/base46/"
 
-vim.g.startuptime_tries = 10
-vim.g.mapleader = " "
-
-require("lazy_setup")
-
-
--- credits to nvchad for this nice event
--- user event that loads after UIEnter + only if file buf is there
-vim.api.nvim_create_autocmd({ "UIEnter", "BufReadPost", "BufNewFile" }, {
-  group = vim.api.nvim_create_augroup("NvFilePost", { clear = true }),
-  callback = function(args)
-    local file = vim.api.nvim_buf_get_name(args.buf)
-    local buftype = vim.api.nvim_get_option_value("buftype", { buf = args.buf })
-
-    if not vim.g.ui_entered and args.event == "UIEnter" then
-      vim.g.ui_entered = true
-    end
-
-    if file ~= "" and buftype ~= "nofile" and vim.g.ui_entered then
-      vim.api.nvim_exec_autocmds("User", { pattern = "FilePost", modeline = false })
-      vim.api.nvim_del_augroup_by_name "NvFilePost"
-
-      vim.schedule(function()
-        vim.api.nvim_exec_autocmds("FileType", {})
-
-        if vim.g.editorconfig then
-          require("editorconfig").config(args.buf)
-        end
-      end)
-    end
-  end,
-})
-
-vim.defer_fn(function()
+later(function()
+  vim.g.mapleader = " "
   require("options")
   require("autocmds")
   require("keymaps")
+end)
 
-  os.execute("python ~/.config/nvim/pywal/chadwal.py &> /dev/null &")
 
-  local autocmd = vim.api.nvim_create_autocmd
 
-  autocmd("Signal", {
-    pattern = "SIGUSR1",
-    callback = function()
-      require('nvchad.utils').reload()
-    end
+--==============================================================================
+-- Plugins
+--==============================================================================
+
+
+require("mini.sessions").setup()
+require("mini.starter").setup()
+
+
+-- Plugin List
+add('dstein64/vim-startuptime')
+add('nvim-lua/plenary.nvim')
+add('nvim-tree/nvim-web-devicons')
+add({ source = 'rose-pine/neovim', name = 'rose-pine' })
+add('akinsho/bufferline.nvim')
+add('saghen/blink.cmp')
+add('neovim/nvim-lspconfig')
+add('mason-org/mason.nvim')
+add('mason-org/mason-lspconfig.nvim')
+add({
+  source = 'nvim-treesitter/nvim-treesitter',
+  checkout = 'main',
+  hooks = { post_checkout = function() vim.cmd('TSUpdate') end },
+})
+add({ source = 'nvim-telescope/telescope.nvim' })
+
+later(function()
+  require('rose-pine').setup({
+    styles = {
+      transparency = true,
+    },
   })
-end, 50)
+  vim.cmd.colorscheme('rose-pine')
+
+  require('bufferline').setup({})
+
+  require('blink.cmp').setup(require('configs.cmp'))
+  require('mason').setup({})
+  require('mason-lspconfig').setup(require('configs.mason'))
+  require('nvim-treesitter').setup(require('configs.treesitter'))
+  require('telescope').setup(require('configs.telescope'))
+  require('mini.notify').setup()
+  vim.notify = require('mini.notify').make_notify()
+  require("mini.statusline").setup()
+  require("mini.pairs").setup()
+end)

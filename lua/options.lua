@@ -1,6 +1,7 @@
 vim.loader.enable()
 local opt = vim.opt
 local o = vim.o
+opt.inccommand = "split"
 
 opt.shortmess:append "sI"
 o.showtabline = 2
@@ -16,6 +17,7 @@ opt.smartcase = true
 o.undofile = true
 
 opt.relativenumber = true
+opt.number = true
 opt.signcolumn = "yes"
 
 
@@ -28,6 +30,5 @@ opt.whichwrap:append("<>[]hl")
 vim.opt.history = 50 -- Number of commands to remember in a history table (per buffer).
 
 vim.diagnostic.config({
-	virtual_text = true,
+  virtual_text = true,
 })
-

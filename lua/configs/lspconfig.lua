@@ -1,5 +1,6 @@
 local M = {}
 
+
 -- disable semanticTokens
 M.on_init = function(client, _)
   if client.supports_method "textDocument/semanticTokens" then
@@ -26,10 +27,5 @@ M.capabilities.textDocument.completion.completionItem = {
     },
   },
 }
-
-M.defaults = function()
-  dofile(vim.g.base46_cache .. "lsp")
-  require("nvchad.lsp").diagnostic_config()
-end
 
 return M

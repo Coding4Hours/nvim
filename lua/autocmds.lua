@@ -43,7 +43,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("n", "D", vim.lsp.buf.type_definition, { desc = "LSP: Go to Type Definition" })
 
     map("n", "S", function() require('telescope.builtin').lsp_document_symbols() end, { desc = "LSP: Document Symbols" })
-    map("n", "ra", function() require('nvchad.lsp.renamer')() end, { desc = "LSP: Rename" })
+    map("n", "ra", vim.lsp.buf.rename, { desc = "LSP: Rename" })
   end,
 })
 
