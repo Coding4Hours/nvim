@@ -47,7 +47,7 @@ require("mini.starter").setup()
 
 
 -- Plugin List
-add('dstein64/vim-startuptime')
+add("folke/twilight.nvim")
 add('nvim-lua/plenary.nvim')
 add('nvim-tree/nvim-web-devicons')
 add({ source = 'rose-pine/neovim', name = 'rose-pine' })
@@ -71,7 +71,7 @@ later(function()
   })
   vim.cmd.colorscheme('rose-pine')
 
-  require('bufferline').setup({})
+  -- require('bufferline').setup({})
 
   require('blink.cmp').setup(require('configs.cmp'))
   require('mason').setup({})

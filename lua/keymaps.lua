@@ -28,7 +28,6 @@ map("n", "<leader>bd", "<cmd>bdelete!<cr>", { desc = "Delete Buffer" })    -- :b
 
 
 -- telescope
-map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "Buffers" })
 map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "Help" })
 map("n", "<leader>fm", "<cmd>Telescope marks<CR>", { desc = "Marks" })
 map("n", "<leader>fd", "<cmd>Telescope diagnostics<CR>", { desc = "Diagnostics" })
@@ -47,6 +46,7 @@ map("n", "<leader>/", "<cmd>Telescope live_grep<cr>", { desc = "Grep" })
 map("n", "U", "<C-r>", { desc = "Undo" })
 map("n", "<C-d>", "<C-d>zz", { desc = "PgDn" })
 map("n", "<C-u>", "<C-u>zz", { desc = "PgUp" })
+map("n", "<Tab>", "<CMD>Telescope buffers<CR>", { desc = "Tabs" })
 
 map({ 'n', 'v' }, 'B', '0', { noremap = true })
 map({ 'n', 'v' }, 'E', '$', { noremap = true })
