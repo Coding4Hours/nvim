@@ -1,13 +1,3 @@
-for _, path in ipairs(vim.api.nvim_get_runtime_file('', true)) do
-  local plugin_dir = path .. '/plugin'
-  if vim.fn.isdirectory(plugin_dir) == 1 then
-    for _, filepath in ipairs(vim.fn.glob(plugin_dir .. '/*.vim', true, true)) do
-      local plugin_name = vim.fn.fnamemodify(filepath, ':t:r')
-      vim.g['loaded_' .. plugin_name] = 1
-    end
-  end
-end
-
 --==============================================================================
 -- Mini.deps
 --==============================================================================
@@ -42,16 +32,14 @@ end)
 --==============================================================================
 
 
-require("mini.sessions").setup()
-require("mini.starter").setup()
 
 
 -- Plugin List
 add('dstein64/vim-startuptime')
+add("folke/twilight.nvim")
 add('nvim-lua/plenary.nvim')
 add('nvim-tree/nvim-web-devicons')
 add({ source = 'rose-pine/neovim', name = 'rose-pine' })
-add('akinsho/bufferline.nvim')
 add('saghen/blink.cmp')
 add('neovim/nvim-lspconfig')
 add('mason-org/mason.nvim')
@@ -63,6 +51,10 @@ add({
 })
 add({ source = 'nvim-telescope/telescope.nvim' })
 
+now(function()
+  require("mini.sessions").setup { autoread = true }
+end)
+
 later(function()
   require('rose-pine').setup({
     styles = {
@@ -70,8 +62,6 @@ later(function()
     },
   })
   vim.cmd.colorscheme('rose-pine')
-
-  require('bufferline').setup({})
 
   require('blink.cmp').setup(require('configs.cmp'))
   require('mason').setup({})
