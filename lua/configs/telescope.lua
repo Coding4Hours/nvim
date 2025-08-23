@@ -11,6 +11,10 @@ return {
     }
   },
   defaults = {
+    file_ignore_patterns = {
+      "node_modules",
+      ".git"
+    },
     prompt_prefix = "   ",
     selection_caret = " ",
     entry_prefix = " ",
@@ -18,7 +22,7 @@ return {
     layout_config = {
       horizontal = {
         prompt_position = "top",
-        preview_width = 0.55,
+        preview_width = 0.40,
       },
       width = 0.87,
       height = 0.80,

@@ -29,7 +29,6 @@ return {
   { "nvim-lua/plenary.nvim", lazy = true },
   {
     "saghen/blink.cmp",
-    build = "cargo build --release",
     version = "1.*",
     event = { "InsertEnter", "CmdLineEnter" },
 
@@ -77,7 +76,6 @@ return {
     "nvim-treesitter/nvim-treesitter",
     branch = "main",
     event = "UIEnter",
-    cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     build = ":TSUpdate",
     opts = function()
       return require("configs.treesitter")
@@ -86,15 +84,15 @@ return {
 
   {
     "nvim-telescope/telescope.nvim",
-    dependencies = {
-      {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'make',
-        config = function()
-          require('telescope').load_extension('fzf')
-        end
-      }
-    },
+    -- dependencies = {
+    --   {
+    --     'nvim-telescope/telescope-fzf-native.nvim',
+    --     build = 'make',
+    --     config = function()
+    --       require('telescope').load_extension('fzf')
+    --     end
+    --   }
+    -- },
     cmd = "Telescope",
     opts = function()
       return require("configs.telescope")
