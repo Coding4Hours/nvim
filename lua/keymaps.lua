@@ -1,11 +1,5 @@
 local map = vim.keymap.set
 
--- Window navigation with Ctrl + hjkl
-map("n", "<C-h>", "<C-w>h", { desc = "Go to Left Window", remap = true })
-map("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", remap = true })
-map("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window", remap = true })
-map("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", remap = true })
---
 -- better search
 map("n", "n", "'Nn'[v:searchforward].'zv'", { expr = true, desc = "Next Search Result" })
 map("x", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next Search Result" })
@@ -43,7 +37,6 @@ map("n", ";", ":", { noremap = true })
 
 -- Random stuff
 map("n", "<leader>/", "<cmd>Telescope live_grep<cr>", { desc = "Grep" })
-map("n", "U", "<C-r>", { desc = "Undo" })
 map("n", "<C-d>", "<C-d>zz", { desc = "PgDn" })
 map("n", "<C-u>", "<C-u>zz", { desc = "PgUp" })
 map("n", "<Tab>", "<CMD>Telescope buffers<CR>", { desc = "Tabs" })
