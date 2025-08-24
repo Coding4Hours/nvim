@@ -1,3 +1,3 @@
 # My config
 
-A fast neovim config
+A fast and minimal neovim config
