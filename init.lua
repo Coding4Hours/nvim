@@ -36,7 +36,6 @@ end)
 
 -- Plugin List
 add('dstein64/vim-startuptime')
-add("folke/twilight.nvim")
 add('nvim-lua/plenary.nvim')
 add('nvim-tree/nvim-web-devicons')
 add({ source = 'rose-pine/neovim', name = 'rose-pine' })
