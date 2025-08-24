@@ -31,34 +31,15 @@ autocmd("BufWritePre", {
 -- Setup autocmd for LSP keymaps
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(ev)
-    map("n", "<leader>cs", "<cmd>lua Snacks.picker.lsp_symbols<CR>",
+    map("n", "<leader>cs", "<cmd>lua Snacks.picker.lsp_symbols()<CR>",
       { desc = "LSP: Document Symbols" })
     map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP: Code Action" })
     map("n", "<leader>cr", vim.lsp.buf.rename, { desc = "LSP: Rename" })
 
-    map("n", "<leader>cD", vim.lsp.buf.declaration, { desc = "LSP: Go to Declaration" })
-    map("n", "<leader>cd", vim.lsp.buf.definition, { desc = "LSP: Go to Definition" })
     map("n", "gD", vim.lsp.buf.declaration, { desc = "LSP: Go to Declaration" })
     map("n", "gd", vim.lsp.buf.definition, { desc = "LSP: Go to Definition" })
-    map("n", "D", vim.lsp.buf.type_definition, { desc = "LSP: Go to Type Definition" })
 
-    map("n", "S", "<cmd>lua Snacks.picker.lsp_symbols<CR>", { desc = "LSP: Document Symbols" })
+    map("n", "S", "<cmd>lua Snacks.picker.lsp_symbols()<CR>", { desc = "LSP: Document Symbols" })
     map("n", "ra", vim.lsp.buf.rename, { desc = "LSP: Rename" })
   end,
 })
-
-
-vim.api.nvim_create_autocmd('CmdwinEnter', {
-  pattern = ':',
-  callback = function()
-    map('n', '<CR>', function()
-      -- Execute and close
-      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", true, false, true), 'n', true)
-    end, { buffer = true })
-  end,
-})
-
-
-
-
-map('n', 'tw', function() trim_whitespace() end, { noremap = true, silent = true })
