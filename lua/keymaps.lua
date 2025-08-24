@@ -58,4 +58,5 @@ map('n', 'vt', ':rightbelow vsplit | vertical resize -15 | terminal<CR>', { sile
 
 
 map("n", "<leader>?", "<cmd>Telescope keymaps<CR>", { desc = "keymap help" })
-map("n", "<leader>sl", "<cmd>lua MiniSessions.select()<CR>", { desc = "keymap help" })
+map("n", "sl", "<cmd>lua MiniSessions.select()<CR>", { desc = "Load Session" })
+map("n", "ss", "<cmd>lua MiniSessions.write(\"Session.vim\")<CR>", { desc = "Save session" })
