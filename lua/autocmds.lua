@@ -28,14 +28,13 @@ autocmd("BufWritePre", {
 
 
 
-
 -- Setup autocmd for LSP keymaps
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(ev)
-    map("n", "<leader>cs", function() require('telescope.builtin').lsp_document_symbols() end,
+    map("n", "<leader>cs", "<cmd>lua Snacks.picker.lsp_symbols<CR>",
       { desc = "LSP: Document Symbols" })
     map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP: Code Action" })
-    map("n", "<leader>cr", function() require('nvchad.lsp.renamer')() end, { desc = "LSP: Rename" })
+    map("n", "<leader>cr", vim.lsp.buf.rename, { desc = "LSP: Rename" })
 
     map("n", "<leader>cD", vim.lsp.buf.declaration, { desc = "LSP: Go to Declaration" })
     map("n", "<leader>cd", vim.lsp.buf.definition, { desc = "LSP: Go to Definition" })
@@ -43,7 +42,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("n", "gd", vim.lsp.buf.definition, { desc = "LSP: Go to Definition" })
     map("n", "D", vim.lsp.buf.type_definition, { desc = "LSP: Go to Type Definition" })
 
-    map("n", "S", function() require('telescope.builtin').lsp_document_symbols() end, { desc = "LSP: Document Symbols" })
+    map("n", "S", "<cmd>lua Snacks.picker.lsp_symbols<CR>", { desc = "LSP: Document Symbols" })
     map("n", "ra", vim.lsp.buf.rename, { desc = "LSP: Rename" })
   end,
 })

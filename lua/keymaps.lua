@@ -22,10 +22,9 @@ map("n", "<leader>bd", "<cmd>bdelete!<cr>", { desc = "Delete Buffer" })    -- :b
 
 
 -- telescope
-map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "Help" })
-map("n", "<leader>fm", "<cmd>Telescope marks<CR>", { desc = "Marks" })
-map("n", "<leader>fd", "<cmd>Telescope diagnostics<CR>", { desc = "Diagnostics" })
-map("n", "ff", "<cmd>Telescope find_files<CR>", { desc = "Files" })
+map("n", "<leader>fh", "<cmd>lua Snacks.picker.help()<CR>", { desc = "Help" })
+map("n", "<leader>fd", "<cmd>lua Snacks.picker.diagnostics()<CR>", { desc = "Diagnostics" })
+map("n", "ff", "<cmd>lua Snacks.picker.files()<CR>", { desc = "Files" })
 
 -- Misc.
 map("n", "<C-c>", "<cmd>%y+<CR>", { desc = "general copy whole file" })
@@ -36,10 +35,10 @@ map("n", ";", ":", { noremap = true })
 
 
 -- Random stuff
-map("n", "<leader>/", "<cmd>Telescope live_grep<cr>", { desc = "Grep" })
+map("n", "<leader>/", "<cmd>lua Snacks.picker.grep()<cr>", { desc = "Grep" })
 map("n", "<C-d>", "<C-d>zz", { desc = "PgDn" })
 map("n", "<C-u>", "<C-u>zz", { desc = "PgUp" })
-map("n", "<Tab>", "<CMD>Telescope buffers<CR>", { desc = "Tabs" })
+map("n", "<Tab>", "<CMD>lua Snacks.picker.buffers()<CR>", { desc = "Tabs" })
 
 map({ 'n', 'v' }, 'B', '0', { noremap = true })
 map({ 'n', 'v' }, 'E', '$', { noremap = true })
@@ -50,6 +49,6 @@ map('n', 'ht', ':split | resize -15 | terminal<CR>', { silent = true })
 map('n', 'vt', ':rightbelow vsplit | vertical resize -15 | terminal<CR>', { silent = true })
 
 
-map("n", "<leader>?", "<cmd>Telescope keymaps<CR>", { desc = "keymap help" })
-map("n", "sl", "<cmd>lua MiniSessions.select()<CR>", { desc = "Load Session" })
-map("n", "ss", "<cmd>lua MiniSessions.write(\"Session.vim\")<CR>", { desc = "Save session" })
+map("n", "<leader>?", "<cmd>lua Snacks.picker.keymaps()<CR>", { desc = "keymap help" })
+map("n", "sl", "<cmd>source Session.vim<CR>", { desc = "Load Session" })
+map("n", "ss", "<cmd>mksession<CR>", { desc = "Save session" })
