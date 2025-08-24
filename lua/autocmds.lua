@@ -28,6 +28,7 @@ autocmd("BufWritePre", {
 
 
 
+
 -- Setup autocmd for LSP keymaps
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(ev)
