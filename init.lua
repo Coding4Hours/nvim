@@ -1,44 +1,24 @@
 vim.defer_fn(function()
-  --==============================================================================
-  -- Mini.deps
-  --==============================================================================
-  local path_package = vim.fn.stdpath("data") .. "/site/"
-  local mini_path = path_package .. "pack/deps/start/mini.nvim"
-
-  if not vim.uv.fs_stat(mini_path) then
-    vim.cmd('echo "Installing `mini.nvim`..." | redraw')
-    local clone_cmd = { "git", "clone", "--filter=blob:none", "https://github.com/echasnovski/mini.nvim", mini_path }
-    vim.fn.system(clone_cmd)
-    vim.cmd('echo "Installed `mini.nvim`." | redraw')
-  end
-
-  require("mini.deps").setup({ path = { package = path_package } })
-
-  local add = MiniDeps.add
-
   vim.g.mapleader = " "
   require("options")
   require("autocmds")
   require("keymaps")
 
-
   --==============================================================================
   -- Plugins
   --==============================================================================
-  add("folke/snacks.nvim")
-  add({ source = "rose-pine/neovim", name = "rose-pine" })
-  add('saghen/blink.cmp')
-  add({
-    source = 'mason-org/mason-lspconfig.nvim',
-    depends = {
-      'mason-org/mason.nvim',
-      'neovim/nvim-lspconfig'
+  vim.pack.add({ "https://github.com/folke/snacks.nvim",
+    "https://github.com/nvim-lualine/lualine.nvim",
+    { src = "https://github.com/rose-pine/neovim", name = "rose-pine" },
+    'https://github.com/saghen/blink.cmp',
+    'https://github.com/mason-org/mason-lspconfig.nvim',
+    'https://github.com/mason-org/mason.nvim',
+    'https://github.com/neovim/nvim-lspconfig',
+    "https://github.com/dstein64/vim-startuptime",
+    {
+      src = 'https://github.com/nvim-treesitter/nvim-treesitter',
+      version = 'main',
     }
-  })
-  add("dstein64/vim-startuptime")
-  add({
-    source = 'nvim-treesitter/nvim-treesitter',
-    checkout = 'main',
   })
 
 
@@ -59,10 +39,5 @@ vim.defer_fn(function()
   require("mini.pairs").setup()
   require("snacks").setup({ picker = require("configs.picker") })
   require('blink.cmp').setup(require('configs.cmp'))
-  require("mini.statusline").setup()
-
-
-  --==============================================================================
-  -- End
-  --==============================================================================
+  require("lualine").setup {}
 end, 50)
