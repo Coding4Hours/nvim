@@ -5,7 +5,7 @@ vim.defer_fn(function()
 	--==============================================================================
 	-- Plugins
 	--==============================================================================
-	vim.pack.add({ "https://github.com/folke/snacks.nvim",
+	vim.pack.add({
 		"https://github.com/nvim-lualine/lualine.nvim",
 		'https://github.com/saghen/blink.cmp',
 		'https://github.com/mason-org/mason-lspconfig.nvim',
@@ -34,13 +34,29 @@ vim.defer_fn(function()
 	require('mason').setup({})
 	require('mason-lspconfig').setup(require('configs.mason'))
 	require('nvim-treesitter').setup(require('configs.treesitter'))
-	require('mini.notify').setup()
-	require("mini.pairs").setup()
-	require("mini.trailspace").setup()
 
-	require("snacks").setup({ picker = require("configs.picker"), select = {} })
 	require('blink.cmp').setup(require('configs.cmp'))
 	require("lualine").setup {}
+
+	require('mini.notify').setup()
+	require("mini.bufremove").setup()
+	require("mini.pairs").setup()
+	require("mini.trailspace").setup()
+	require("mini.extra").setup()
+	require("mini.pick").setup {
+		options = { use_cache = true },
+		window = {
+			prompt_prefix = "   ",
+		},
+	}
+
+	require("mini.icons")
+	require("mini.indentscope").setup({
+		symbol = "│",
+	})
+
+	vim.ui.select = MiniPick.ui_select
+
 
 
 	require("keymaps")

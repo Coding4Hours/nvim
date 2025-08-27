@@ -16,9 +16,6 @@ map({ "n", "x" }, "<leader>d", '"_d')
 
 
 -- telescope
-map("n", "<leader>fh", "<cmd>lua Snacks.picker.help()<CR>", { desc = "Help" })
-map("n", "<leader>fd", "<cmd>lua Snacks.picker.diagnostics()<CR>", { desc = "Diagnostics" })
-map("n", "ff", "<cmd>lua Snacks.picker.files()<CR>", { desc = "Files" })
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 vim.keymap.set("n", "J", "mzJ`z")
@@ -31,10 +28,8 @@ map("n", ";", ":", { noremap = true })
 
 
 -- Random stuff
-map("n", "<leader>/", "<cmd>lua Snacks.picker.grep()<cr>", { desc = "Grep" })
 map("n", "<C-d>", "<C-d>zz", { desc = "PgDn" })
 map("n", "<C-u>", "<C-u>zz", { desc = "PgUp" })
-map("n", "<Tab>", "<CMD>lua Snacks.picker.buffers()<CR>", { desc = "Tabs" })
 
 map({ 'n', 'v' }, 'B', '0', { noremap = true })
 map({ 'n', 'v' }, 'E', '$', { noremap = true })
@@ -45,7 +40,16 @@ map('n', 'ht', ':split | resize -15 | terminal<CR>', { silent = true })
 map('n', 'vt', ':rightbelow vsplit | vertical resize -15 | terminal<CR>', { silent = true })
 
 
-map("n", "<leader>?", "<cmd>lua Snacks.picker.keymaps()<CR>", { desc = "keymap help" })
+map('n', '<leader>bd', '<CMD>lua MiniBufremove.delete()<CR>', { silent = true })
+
+map("n", "<leader>?", "<cmd>Pick keymaps<CR>", { desc = "keymap help" })
+map("n", "<leader>/", "<cmd>Pick grep<cr>", { desc = "Grep" })
+map("n", "<Tab>", "<CMD>Pick buffers<CR>", { desc = "Tabs" })
+map("n", "<leader>fh", "<cmd>Pick help<CR>", { desc = "Help" })
+map("n", "<leader>fd", "<cmd>Pick diagnostics<CR>", { desc = "Diagnostics" })
+map("n", "ff", "<cmd>Pick files<CR>", { desc = "Files" })
+
+
 map("n", "sl", "<cmd>source Session.vim<CR>", { desc = "Load Session" })
 map("n", "ss", "<cmd>mksession<CR>", { desc = "Save session" })
 vim.keymap.set("n", "n", "nzzzv")

@@ -19,12 +19,9 @@ vim.opt.signcolumn = "yes"
 
 
 
-vim.opt.updatetime = 200
 vim.opt.clipboard = "unnamedplus"
 -- go to previous/next line with h,l,left arrow and right arrow
 -- when cursor reaches end/beginning of line
 vim.opt.whichwrap:append("<>[]hl")
 
-vim.diagnostic.config({
-  virtual_text = true,
-})
+vim.diagnostic.config { virtual_text = true }
