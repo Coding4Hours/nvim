@@ -10,7 +10,7 @@ vim.opt.shiftwidth = 2
 vim.opt.laststatus = 3
 vim.opt.smoothscroll = true
 vim.opt.smartindent = true
-vim.opt.smartcase = true
+vim.opt.ignorecase = true
 vim.opt.undofile = true
 
 vim.opt.relativenumber = true
