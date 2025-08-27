@@ -1,33 +1,29 @@
+local vim = vim
+
 vim.loader.enable()
-local opt = vim.opt
-local o = vim.o
-opt.inccommand = "split"
+vim.opt.inccommand = "split"
 
-opt.shortmess:append "sI"
-o.showtabline = 2
-o.cmdheight = 0
-opt.tabstop = 2
-opt.shiftwidth = 2
-opt.expandtab = true
-opt.laststatus = 3
-opt.smoothscroll = true
-opt.smartindent = true
-opt.ignorecase = true
-opt.smartcase = true
-o.undofile = true
+vim.opt.showtabline = 2
+vim.opt.cmdheight = 0
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.laststatus = 3
+vim.opt.smoothscroll = true
+vim.opt.smartindent = true
+vim.opt.smartcase = true
+vim.opt.undofile = true
 
-opt.relativenumber = true
-opt.number = true
-opt.signcolumn = "yes"
+vim.opt.relativenumber = true
+vim.opt.number = true
+vim.opt.signcolumn = "yes"
 
 
 
-opt.updatetime = 200
-o.clipboard = "unnamedplus"
+vim.opt.updatetime = 200
+vim.opt.clipboard = "unnamedplus"
 -- go to previous/next line with h,l,left arrow and right arrow
 -- when cursor reaches end/beginning of line
-opt.whichwrap:append("<>[]hl")
-vim.opt.history = 50 -- Number of commands to remember in a history table (per buffer).
+vim.opt.whichwrap:append("<>[]hl")
 
 vim.diagnostic.config({
   virtual_text = true,
