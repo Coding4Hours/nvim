@@ -1,21 +1,20 @@
-vim.loader.enable()
 vim.g.mapleader = " "
 
-local path_package = vim.fn.stdpath('data') .. '/site/'
-local mini_path = path_package .. 'pack/deps/start/mini.nvim'
+local path_package = vim.fn.stdpath "data" .. "/site/"
+local mini_path = path_package .. "pack/deps/start/mini.nvim"
 
 if not vim.loop.fs_stat(mini_path) then
-	vim.cmd('echo "Installing `mini.nvim`" | redraw')
+	vim.cmd "echo \"Installing `mini.nvim`\" | redraw"
 	local clone_cmd = {
-		'git', 'clone', '--filter=blob:none',
-		'https://github.com/echasnovski/mini.nvim', mini_path
+		"git", "clone", "--filter=blob:none",
+		"https://github.com/nvim-mini/mini.nvim", mini_path
 	}
 	vim.fn.system(clone_cmd)
-	vim.cmd('packadd mini.nvim | helptags ALL')
-	vim.cmd('echo "Installed `mini.nvim`" | redraw')
+	vim.cmd "packadd mini.nvim | helptags ALL"
+	vim.cmd "echo \"Installed `mini.nvim`\" | redraw"
 end
 
-require('mini.deps').setup({ path = { package = path_package } })
+require "mini.deps".setup { path = { package = path_package } }
 local add, later = MiniDeps.add, MiniDeps.later
 
 
@@ -23,18 +22,18 @@ local add, later = MiniDeps.add, MiniDeps.later
 -- Plugin Declarations
 --==============================================================================
 later(function()
-	add('neovim/nvim-lspconfig')
-	add('mason-org/mason.nvim')
-	add('mason-org/mason-lspconfig.nvim')
-	add('saghen/blink.cmp')
+	add "neovim/nvim-lspconfig"
+	add "mason-org/mason.nvim"
+	add "mason-org/mason-lspconfig.nvim"
+	add "saghen/blink.cmp"
 	add "dstein64/vim-startuptime"
 
-	add({ source = "rose-pine/neovim", name = "rose-pine" })
-	add("shortcuts/no-neck-pain.nvim")
-	add({ source = 'nvim-treesitter/nvim-treesitter', checkout = 'main' })
+	add { source = "rose-pine/neovim", name = "rose-pine" }
+	add "shortcuts/no-neck-pain.nvim"
+	add { source = "nvim-treesitter/nvim-treesitter", checkout = "main" }
 
 	--==============================================================================
-	-- Core Settings
+	-- Options
 	--==============================================================================
 	local opt = vim.opt
 
@@ -52,7 +51,7 @@ later(function()
 	opt.smoothscroll = true
 	opt.tabstop = 2
 	opt.undofile = true
-	opt.whichwrap:append("<>[]hl")
+	opt.whichwrap:append "<>[]hl"
 
 	vim.diagnostic.config { virtual_text = true }
 
@@ -67,22 +66,22 @@ later(function()
 		vim.keymap.set(modes, lhs, rhs, options)
 	end
 
-	map({ "n", "x" }, "c", '"_c', { desc = "Cut without yanking" })
-	map({ "n", "x" }, "<leader>d", '"_d', { desc = "Delete without yanking" })
+	map({ "n", "x" }, "c", "\"_c", { desc = "Cut without yanking" })
+	map({ "n", "x" }, "<leader>d", "\"_d", { desc = "Delete without yanking" })
 	map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move line down" })
 	map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move line up" })
 	map("n", "<C-d>", "<C-d>zz", { desc = "Page down and center" })
 	map("n", "<C-u>", "<C-u>zz", { desc = "Page up and center" })
-	map({ 'n', 'v' }, 'B', '0', { noremap = true, desc = "Go to beginning of line" })
-	map({ 'n', 'v' }, 'E', '$', { noremap = true, desc = "Go to end of line" })
+	map({ "n", "v" }, "B", "0", { noremap = true, desc = "Go to beginning of line" })
+	map({ "n", "v" }, "E", "$", { noremap = true, desc = "Go to end of line" })
 	map("n", "n", "nzzzv", { desc = "Next search result and center" })
 	map("n", "N", "Nzzzv", { desc = "Previous search result and center" })
 	map("n", ";", ":", { noremap = true })
 
 	map("t", "<Esc>", "<C-\\><C-n>")
 
-	map('n', 'ht', ':split | resize -15 | terminal<CR>', { desc = "Open horizontal terminal" })
-	map('n', '<leader>bd', '<CMD>bdelete!<CR>', { desc = "Close current buffer" })
+	map("n", "ht", ":split | resize -15 | terminal<CR>", { desc = "Open horizontal terminal" })
+	map("n", "<leader>bd", "<CMD>bdelete!<CR>", { desc = "Close current buffer" })
 	map("n", "<leader>pv", "<cmd>Explore<cr>", { desc = "Open file explorer" })
 
 	map("n", "<leader>?", "<cmd>Pick keymaps<CR>", { desc = "Show keymaps" })
@@ -92,26 +91,26 @@ later(function()
 	map("n", "ff", "<cmd>Pick files<CR>", { desc = "Find files" })
 
 	--==============================================================================
-	-- Plugin Setup
+	-- Plugins
 	--==============================================================================
-	require("rose-pine").setup({ styles = { transparency = true } })
+	require "rose-pine".setup { styles = { transparency = true } }
 	vim.cmd.colorscheme "rose-pine"
 
-	require('mason').setup({})
-	require('mason-lspconfig').setup(require('configs.mason'))
+	require "mason".setup {}
+	require "mason-lspconfig".setup(require "configs.mason")
 
-	require('mini.notify').setup()
-	require("mini.pairs").setup()
-	require("mini.extra").setup()
-	require('mini.statusline').setup()
-	require("mini.pick").setup {
+	require "mini.notify".setup()
+	require "mini.pairs".setup()
+	require "mini.extra".setup()
+	require "mini.statusline".setup()
+	require "mini.pick".setup {
 		options = { use_cache = true },
 		window = { prompt_prefix = "   " },
 	}
 	vim.ui.select = MiniPick.ui_select
 
-	require("no-neck-pain").setup {}
-	require('blink.cmp').setup(require('configs.cmp'))
+	require "no-neck-pain".setup {}
+	require "blink.cmp".setup(require "configs.cmp")
 
 	--==============================================================================
 	-- Autocommands
@@ -119,8 +118,8 @@ later(function()
 	local autocmd = vim.api.nvim_create_autocmd
 	local augroup = vim.api.nvim_create_augroup
 
-	local lsp_group = augroup('UserLspConfig', {})
-	local file_group = augroup('UserFileConfig', {})
+	local lsp_group = augroup("UserLspConfig", {})
+	local file_group = augroup("UserFileConfig", {})
 
 	autocmd("BufWritePre", {
 		group = file_group,
