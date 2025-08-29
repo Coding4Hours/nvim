@@ -27,7 +27,6 @@ later(function()
 	add('mason-org/mason-lspconfig.nvim')
 	add('saghen/blink.cmp')
 
-	add('nvim-lualine/lualine.nvim')
 	add({ source = "rose-pine/neovim", name = "rose-pine" })
 	add("shortcuts/no-neck-pain.nvim")
 	add({ source = 'nvim-treesitter/nvim-treesitter', checkout = 'main' })
