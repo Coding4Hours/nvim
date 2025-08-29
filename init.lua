@@ -121,7 +121,6 @@ later(function()
 
 	local lsp_group = augroup('UserLspConfig', {})
 	local file_group = augroup('UserFileConfig', {})
-	local window_group = augroup('UserWindowConfig', {})
 
 	autocmd("BufWritePre", {
 		group = file_group,
@@ -143,22 +142,6 @@ later(function()
 			map("n", "gD", vim.lsp.buf.declaration, { buffer = ev.buf, desc = "LSP: Go to Declaration" })
 			map("n", "gd", vim.lsp.buf.definition, { buffer = ev.buf, desc = "LSP: Go to Definition" })
 			map("n", "ra", vim.lsp.buf.rename, { buffer = ev.buf, desc = "LSP: Rename" })
-		end,
-	})
-
-	autocmd("FileType", {
-		group = window_group,
-		pattern = "help",
-		command = "wincmd L"
-	})
-
-	autocmd("BufEnter", {
-		group = window_group,
-		pattern = "*",
-		callback = function()
-			if vim.bo.buftype == "terminal" then
-				vim.cmd("startinsert")
-			end
 		end,
 	})
 end)
