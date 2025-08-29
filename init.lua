@@ -1,3 +1,4 @@
+vim.loader.enable()
 vim.g.mapleader = " "
 
 local path_package = vim.fn.stdpath('data') .. '/site/'
@@ -26,6 +27,7 @@ later(function()
 	add('mason-org/mason.nvim')
 	add('mason-org/mason-lspconfig.nvim')
 	add('saghen/blink.cmp')
+	add "dstein64/vim-startuptime"
 
 	add({ source = "rose-pine/neovim", name = "rose-pine" })
 	add("shortcuts/no-neck-pain.nvim")
@@ -34,7 +36,6 @@ later(function()
 	--==============================================================================
 	-- Core Settings
 	--==============================================================================
-	vim.loader.enable()
 	local opt = vim.opt
 
 	opt.clipboard = "unnamedplus"
