@@ -28,6 +28,7 @@ later(function()
 	add "saghen/blink.cmp"
 	add "dstein64/vim-startuptime"
 
+	add "stevearc/conform.nvim"
 	add { source = "rose-pine/neovim", name = "rose-pine" }
 	add "shortcuts/no-neck-pain.nvim"
 	add { source = "nvim-treesitter/nvim-treesitter", checkout = "main" }
@@ -111,6 +112,14 @@ later(function()
 
 	require "no-neck-pain".setup {}
 	require "blink.cmp".setup(require "configs.cmp")
+	require "conform".setup {
+		formatters_by_ft = {
+			lua = { "stylua" },
+			rust = { "rustfmt", lsp_format = "fallback" },
+			astro = { "biome" },
+			javascript = { "prettierd", "prettier", stop_after_first = true },
+		},
+	}
 
 	--==============================================================================
 	-- Autocommands
@@ -123,9 +132,8 @@ later(function()
 
 	autocmd("BufWritePre", {
 		group = file_group,
-		desc = "Format on save and ensure parent directory exists",
+		desc = "ensure parent directory exists",
 		callback = function(args)
-			vim.lsp.buf.format({ async = false })
 			local dir = vim.fn.fnamemodify(vim.uv.fs_realpath(args.match) or args.match, ":p:h")
 			if vim.fn.isdirectory(dir) == 0 then
 				vim.fn.mkdir(dir, "p")
