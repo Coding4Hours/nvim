@@ -190,7 +190,4 @@ later(function()
 	vim.opt.whichwrap:append("<>[]hl")
 
 	vim.diagnostic.config { virtual_text = true }
-
-	require("options")
-	require("autocmds")
 end)
