@@ -28,6 +28,7 @@ later(function()
 	add "saghen/blink.cmp"
 	add "dstein64/vim-startuptime"
 
+
 	add "stevearc/conform.nvim"
 	add { source = "rose-pine/neovim", name = "rose-pine" }
 	add "shortcuts/no-neck-pain.nvim"
@@ -40,16 +41,10 @@ later(function()
 
 	opt.clipboard = "unnamedplus"
 	opt.cmdheight = 0
-	opt.ignorecase = true
 	opt.inccommand = "split"
 	opt.laststatus = 3
-	opt.number = true
 	opt.relativenumber = true
 	opt.shiftwidth = 2
-	opt.showtabline = 2
-	opt.signcolumn = "yes"
-	opt.smartindent = true
-	opt.smoothscroll = true
 	opt.tabstop = 2
 	opt.undofile = true
 	opt.whichwrap:append "<>[]hl"
@@ -61,9 +56,7 @@ later(function()
 	--==============================================================================
 	local map = function(modes, lhs, rhs, opts)
 		local options = { noremap = true, silent = true }
-		if opts then
-			options = vim.tbl_extend("force", options, opts)
-		end
+		if opts then options = vim.tbl_extend("force", options, opts) end
 		vim.keymap.set(modes, lhs, rhs, options)
 	end
 
@@ -73,11 +66,8 @@ later(function()
 	map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move line up" })
 	map("n", "<C-d>", "<C-d>zz", { desc = "Page down and center" })
 	map("n", "<C-u>", "<C-u>zz", { desc = "Page up and center" })
-	map({ "n", "v" }, "B", "0", { noremap = true, desc = "Go to beginning of line" })
-	map({ "n", "v" }, "E", "$", { noremap = true, desc = "Go to end of line" })
 	map("n", "n", "nzzzv", { desc = "Next search result and center" })
 	map("n", "N", "Nzzzv", { desc = "Previous search result and center" })
-	map("n", ";", ":", { noremap = true })
 
 	map("t", "<Esc>", "<C-\\><C-n>")
 
@@ -151,4 +141,6 @@ later(function()
 			map("n", "ra", vim.lsp.buf.rename, { buffer = ev.buf, desc = "LSP: Rename" })
 		end,
 	})
+
+	vim.cmd("NoNeckPain")
 end)
