@@ -15,7 +15,6 @@ later(function()
 	add "mason-org/mason-lspconfig.nvim"
 	add "saghen/blink.cmp"
 
-	-- add { source = "theprimeagen/harpoon", checkout = "harpoon2", depends = { "nvim-lua/plenary.nvim" } }
 	add "MeanderingProgrammer/harpoon-core.nvim"
 	add { source = "rose-pine/neovim", name = "rose-pine" }
 	add { source = "nvim-treesitter/nvim-treesitter", checkout = "main" }
@@ -81,36 +80,19 @@ map("n", "=ap", "ma=ap'a")
 	vim.ui.select = MiniPick.ui_select
 
 	require "blink.cmp".setup(require "configs.cmp") 
--- local harpoon = require("harpoon")
---
--- -- REQUIRED
--- harpoon:setup()
--- -- REQUIRED
---
--- vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
--- vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
---
--- vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
--- vim.keymap.set("n", "<C-t>", function() harpoon:list():select(2) end)
--- vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end)
--- vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
---
--- -- Toggle previous & next buffers stored within Harpoon list
--- vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
--- vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
+
         require('harpoon-core').setup({})
 
 vim.keymap.set("n", "<leader>a", function() require('harpoon-core').add_file() end)
 vim.keymap.set("n", "<C-e>", function() require('harpoon-core').toggle_quick_menu() end)
 
-vim.keymap.set("n", "<C-1>", function() require('harpoon-core').nav_file(1) end)
-vim.keymap.set("n", "<C-2>", function() require('harpoon-core').nav_file(2) end)
-vim.keymap.set("n", "<C-3>", function() require('harpoon-core').nav_file(3) end)
-vim.keymap.set("n", "<C-4>", function() require('harpoon-core').nav_file(4) end)
+vim.keymap.set("n", "<A-1>", function() require('harpoon-core').nav_file(1) end)
+vim.keymap.set("n", "<A-2>", function() require('harpoon-core').nav_file(2) end)
+vim.keymap.set("n", "<A-3>", function() require('harpoon-core').nav_file(3) end)
+vim.keymap.set("n", "<A-4>", function() require('harpoon-core').nav_file(4) end)
 
--- Toggle previous & next buffers stored within Harpoon list
-vim.keymap.set("n", "<C-S-P>", function()  require('harpoon-core').nav_prev() end)
-vim.keymap.set("n", "<C-S-N>", function()require('harpoon-core').nav_next() end)
+vim.keymap.set("n", "<A-H>", function()  require('harpoon-core').nav_prev() end)
+vim.keymap.set("n", "<A-L>", function()require('harpoon-core').nav_next() end)
 
 	--==============================================================================
 	-- Autocommands
