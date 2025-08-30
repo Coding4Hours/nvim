@@ -1,63 +1,42 @@
 vim.g.mapleader = " "
 
-local path_package = vim.fn.stdpath "data" .. "/site/"
-local mini_path = path_package .. "pack/deps/start/mini.nvim"
-
+local mini_path = vim.fn.stdpath('data') .. '/site/pack/deps/start/mini.nvim'
 if not vim.loop.fs_stat(mini_path) then
-	vim.cmd "echo \"Installing `mini.nvim`\" | redraw"
-	local clone_cmd = {
-		"git", "clone", "--filter=blob:none",
-		"https://github.com/nvim-mini/mini.nvim", mini_path
-	}
-	vim.fn.system(clone_cmd)
-	vim.cmd "packadd mini.nvim | helptags ALL"
-	vim.cmd "echo \"Installed `mini.nvim`\" | redraw"
+  vim.fn.system({'git', 'clone', '--filter=blob:none', 'https://github.com/nvim-mini/mini.nvim', mini_path})
+  vim.cmd 'packadd mini.nvim | helptags ALL'
 end
 
 require "mini.deps".setup { path = { package = path_package } }
 local add, later = MiniDeps.add, MiniDeps.later
 
-
---==============================================================================
--- Plugin Declarations
---==============================================================================
 later(function()
 	add "neovim/nvim-lspconfig"
 	add "mason-org/mason.nvim"
 	add "mason-org/mason-lspconfig.nvim"
 	add "saghen/blink.cmp"
-	add "dstein64/vim-startuptime"
 
-
-	add "stevearc/conform.nvim"
+	-- add { source = "theprimeagen/harpoon", checkout = "harpoon2", depends = { "nvim-lua/plenary.nvim" } }
+	add "MeanderingProgrammer/harpoon-core.nvim"
 	add { source = "rose-pine/neovim", name = "rose-pine" }
-	add "shortcuts/no-neck-pain.nvim"
 	add { source = "nvim-treesitter/nvim-treesitter", checkout = "main" }
 
-	--==============================================================================
-	-- Options
-	--==============================================================================
-	local opt = vim.opt
-
-	opt.clipboard = "unnamedplus"
-	opt.cmdheight = 0
-	opt.inccommand = "split"
-	opt.laststatus = 3
-	opt.relativenumber = true
-	opt.shiftwidth = 2
-	opt.tabstop = 2
-	opt.undofile = true
-	opt.whichwrap:append "<>[]hl"
+	vim.opt.clipboard = "unnamedplus"
+	vim.opt.cmdheight = 0
+	vim.opt.inccommand = "split"
+	vim.opt.laststatus = 3
+	vim.opt.relativenumber = true
+	vim.opt.shiftwidth = 2
+	vim.opt.tabstop = 2
+	vim.opt.undofile = true
+	vim.opt.whichwrap:append "<>[]hl"
 
 	vim.diagnostic.config { virtual_text = true }
 
 	--==============================================================================
 	-- Keymaps
 	--==============================================================================
-	local map = function(modes, lhs, rhs, opts)
-		local options = { noremap = true, silent = true }
-		if opts then options = vim.tbl_extend("force", options, opts) end
-		vim.keymap.set(modes, lhs, rhs, options)
+	local map  = function(modes, lhs, rhs, opts)
+		if opts then vim.keymap.set(modes, lhs, rhs, vim.tbl_extend("force", { noremap = true, silent = true }, opts)) end
 	end
 
 	map({ "n", "x" }, "c", "\"_c", { desc = "Cut without yanking" })
@@ -80,6 +59,7 @@ later(function()
 	map("n", "<leader>/", "<cmd>Pick grep_live<cr>", { desc = "Live Grep" })
 	map("n", "<Tab>", "<CMD>Pick buffers<CR>", { desc = "Switch buffers" })
 	map("n", "ff", "<cmd>Pick files<CR>", { desc = "Find files" })
+map("n", "=ap", "ma=ap'a")
 
 	--==============================================================================
 	-- Plugins
@@ -90,26 +70,47 @@ later(function()
 	require "mason".setup {}
 	require "mason-lspconfig".setup(require "configs.mason")
 
-	require "mini.notify".setup()
+	require "mini.icons".setup()
 	require "mini.pairs".setup()
 	require "mini.extra".setup()
-	require "mini.statusline".setup()
+	require "mini.tabline".setup {}
 	require "mini.pick".setup {
 		options = { use_cache = true },
 		window = { prompt_prefix = "   " },
 	}
 	vim.ui.select = MiniPick.ui_select
 
-	require "no-neck-pain".setup {}
-	require "blink.cmp".setup(require "configs.cmp")
-	require "conform".setup {
-		formatters_by_ft = {
-			lua = { "stylua" },
-			rust = { "rustfmt", lsp_format = "fallback" },
-			astro = { "biome" },
-			javascript = { "prettierd", "prettier", stop_after_first = true },
-		},
-	}
+	require "blink.cmp".setup(require "configs.cmp") 
+-- local harpoon = require("harpoon")
+--
+-- -- REQUIRED
+-- harpoon:setup()
+-- -- REQUIRED
+--
+-- vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
+-- vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+--
+-- vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
+-- vim.keymap.set("n", "<C-t>", function() harpoon:list():select(2) end)
+-- vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end)
+-- vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
+--
+-- -- Toggle previous & next buffers stored within Harpoon list
+-- vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
+-- vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
+        require('harpoon-core').setup({})
+
+vim.keymap.set("n", "<leader>a", function() require('harpoon-core').add_file() end)
+vim.keymap.set("n", "<C-e>", function() require('harpoon-core').toggle_quick_menu() end)
+
+vim.keymap.set("n", "<C-1>", function() require('harpoon-core').nav_file(1) end)
+vim.keymap.set("n", "<C-2>", function() require('harpoon-core').nav_file(2) end)
+vim.keymap.set("n", "<C-3>", function() require('harpoon-core').nav_file(3) end)
+vim.keymap.set("n", "<C-4>", function() require('harpoon-core').nav_file(4) end)
+
+-- Toggle previous & next buffers stored within Harpoon list
+vim.keymap.set("n", "<C-S-P>", function()  require('harpoon-core').nav_prev() end)
+vim.keymap.set("n", "<C-S-N>", function()require('harpoon-core').nav_next() end)
 
 	--==============================================================================
 	-- Autocommands
@@ -117,13 +118,11 @@ later(function()
 	local autocmd = vim.api.nvim_create_autocmd
 	local augroup = vim.api.nvim_create_augroup
 
-	local lsp_group = augroup("UserLspConfig", {})
-	local file_group = augroup("UserFileConfig", {})
-
 	autocmd("BufWritePre", {
-		group = file_group,
+		group = augroup("UserLspConfig", {}),
 		desc = "ensure parent directory exists",
 		callback = function(args)
+			vim.lsp.buf.format()
 			local dir = vim.fn.fnamemodify(vim.uv.fs_realpath(args.match) or args.match, ":p:h")
 			if vim.fn.isdirectory(dir) == 0 then
 				vim.fn.mkdir(dir, "p")
@@ -132,7 +131,7 @@ later(function()
 	})
 
 	autocmd("LspAttach", {
-		group = lsp_group,
+		group = augroup("UserLspConfig", {}),
 		desc = "Setup LSP keymaps on attach",
 		callback = function(ev)
 			map("n", "ca", vim.lsp.buf.code_action, { buffer = ev.buf, desc = "LSP: Code Action" })
@@ -142,5 +141,4 @@ later(function()
 		end,
 	})
 
-	vim.cmd("NoNeckPain")
 end)
