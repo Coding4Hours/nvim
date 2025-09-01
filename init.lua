@@ -16,7 +16,7 @@ later(function()
 	add "saghen/blink.cmp"
 
 	add { source = "rose-pine/neovim", name = "rose-pine" }
-	add { source = "nvim-treesitter/nvim-treesitter", checkout = "main" }
+	add "nvim-treesitter/nvim-treesitter"
 
 	vim.opt.clipboard = "unnamedplus"
 	vim.opt.cmdheight = 0
@@ -46,13 +46,10 @@ later(function()
 	map("t", "<Esc>", "<C-\\><C-n>")
 
 	map("n", "<C-/>", ":split | resize -15 | terminal<CR>", { desc = "Open horizontal terminal" })
-	map("n", "<leader>bd", "<CMD>bdelete!<CR>", { desc = "Close current buffer" })
+	map("n", "<leader>bd", "<CMD>lua MiniBufremove.delete()<CR>", { desc = "Close current buffer" })
 	map("n", "<leader>pv", "<cmd>Explore<cr>", { desc = "Open file explorer" })
 
-	map("n", "<leader>?", "<cmd>Pick keymaps<CR>", { desc = "Show keymaps" })
-	map("n", "<leader>/", "<cmd>Pick grep_live<cr>", { desc = "Live Grep" })
 	map("n", "<Tab>", "<CMD>Pick buffers<CR>", { desc = "Switch buffers" })
-	map("n", "ff", "<cmd>Pick files<CR>", { desc = "Find files" })
 
 	--==============================================================================
 	-- Plugins
@@ -64,58 +61,38 @@ later(function()
 	require "mason-lspconfig".setup(require "configs.mason")
 
 	require "mini.icons".setup {}
+	require "mini.bufremove".setup {}
 	require "mini.pairs".setup {}
 	require "mini.tabline".setup {}
-	require "mini.pick".setup {}
-	vim.ui.select = MiniPick.ui_select
 
 	require "blink.cmp".setup(require "configs.cmp")
-
-
-	MiniPick.registry['keymaps'] = function()
-		local items = {}
-		for _, m in ipairs({ 'n','x','s','o','i','l','c','t' }) do
-			for _, i in ipairs(vim.api.nvim_get_keymap(m)) do
-				i.text = string.format('%s │ %-15s │ %s', m, vim.fn.keytrans(i.lhs), i.desc or i.rhs or '')
-				table.insert(items, i)
-			end
-		end
-		MiniPick.start({
-			source = {
-				name = 'Keymaps',
-				items = items,
-				choose = function(i) vim.schedule(function() vim.api.nvim_input(vim.api.nvim_replace_termcodes(i.lhs, true, true, true)) end) end
-			}
-		})
-	end
-
-
-
-
-	vim.api.nvim_create_autocmd("BufWritePre", {
-		group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-		desc = "ensure parent directory exists",
-		callback = function(args)
-			vim.lsp.buf.format()
-			local dir = vim.fn.fnamemodify(vim.uv.fs_realpath(args.match) or args.match, ":p:h")
-			if vim.fn.isdirectory(dir) == 0 then
-				vim.fn.mkdir(dir, "p")
-			end
-		end,
-	})
-
-	vim.api.nvim_create_autocmd("LspAttach", {
-		group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-		desc = "Setup LSP keymaps on attach",
-		callback = function(e)
-			map("n", "da", vim.diagnostic.setqflist, {buffer = e.buf, desc = "LSP: Diagnostics"})
-			map("n", "rr", vim.lsp.buf.references, { buffer = e.buf, desc = "LSP: References" })
-			map("n", "S", vim.lsp.buf.document_symbol, { buffer = e.buf, desc = "LSP: Symbols" })
-			map("n", "ca", vim.lsp.buf.code_action, { buffer = e.buf, desc = "LSP: Code Action" })
-			map("n", "gD", vim.lsp.buf.declaration, { buffer = e.buf, desc = "LSP: Go to Declaration" })
-			map("n", "gd", vim.lsp.buf.definition, { buffer = e.buf, desc = "LSP: Go to Definition" })
-			map("n", "ra", vim.lsp.buf.rename, { buffer = e.buf, desc = "LSP: Rename" })
-		end,
-	})
-
+	require "nvim-treesitter.configs".setup(require "configs.treesitter")
 end)
+
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+	desc = "ensure parent directory exists",
+	callback = function(args)
+		vim.lsp.buf.format()
+		local dir = vim.fn.fnamemodify(vim.uv.fs_realpath(args.match) or args.match, ":p:h")
+		if vim.fn.isdirectory(dir) == 0 then
+			vim.fn.mkdir(dir, "p")
+		end
+	end,
+})
+
+vim.api.nvim_create_autocmd("LspAttach", {
+	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+	desc = "Setup LSP keymaps on attach",
+	callback = function(e)
+		local map = vim.keymap.set
+		map("n", "da", vim.diagnostic.setqflist, {buffer = e.buf, desc = "LSP: Diagnostics"})
+		map("n", "rr", vim.lsp.buf.references, { buffer = e.buf, desc = "LSP: References" })
+		map("n", "S", vim.lsp.buf.document_symbol, { buffer = e.buf, desc = "LSP: Symbols" })
+		map("n", "ca", vim.lsp.buf.code_action, { buffer = e.buf, desc = "LSP: Code Action" })
+		map("n", "gD", vim.lsp.buf.declaration, { buffer = e.buf, desc = "LSP: Go to Declaration" })
+		map("n", "gd", vim.lsp.buf.definition, { buffer = e.buf, desc = "LSP: Go to Definition" })
+		map("n", "ra", vim.lsp.buf.rename, { buffer = e.buf, desc = "LSP: Rename" })
+	end,
+})
