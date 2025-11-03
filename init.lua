@@ -14,13 +14,13 @@ vim.o.undofile = true
 vim.o.whichwrap = vim.o.whichwrap .. "<>[]hl"
 
 vim.pack.add({
-	{ src = "https://github.com/rose-pine/neovim", name = "rose-pine" },
+	{ src = "https://github.com/rose-pine/neovim",              name = "rose-pine" },
 	"https://github.com/nvim-mini/mini.nvim",
 	"https://github.com/neovim/nvim-lspconfig",
 	"https://github.com/mason-org/mason.nvim",
 	"https://github.com/mason-org/mason-lspconfig.nvim",
 	"https://github.com/saghen/blink.cmp",
-	"https://github.com/nvim-treesitter/nvim-treesitter",
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" }
 })
 
 
@@ -57,22 +57,16 @@ vim.api.nvim_create_autocmd("FileType", {
 		if ft:match("blink%-cmp") then
 			return
 		end
-		print "was not blink"
+		require('nvim-treesitter').install({ vim.bo[args.buf].filetype })
 
-		vim.treesitter.start()
+		pcall(vim.treesitter.start, args.buf)
+		vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 	end,
 })
 vim.api.nvim_create_autocmd("BufReadPre", {
 	desc = "load blink.cmp",
 	pattern = "*",
 	callback = function()
-		require("nvim-treesitter.configs").setup {
-			auto_install = true,
-			highlight = { enable = true },
-			indent = { enable = true }
-		}
-
-
 		require("blink.cmp").setup {
 			fuzzy = {
 				implementation = "prefer_rust",
