@@ -50,11 +50,28 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	end,
 })
 
-vim.api.nvim_create_autocmd("BufReadPost", {
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "*" }, -- still needed
+	callback = function(args)
+		local ft = vim.bo[args.buf].filetype
+		if ft:match("blink%-cmp") then
+			return
+		end
+		print "was not blink"
+
+		vim.treesitter.start()
+	end,
+})
+vim.api.nvim_create_autocmd("BufReadPre", {
 	desc = "load blink.cmp",
 	pattern = "*",
 	callback = function()
-		require("nvim-treesitter").setup { auto_install = true }
+		require("nvim-treesitter.configs").setup {
+			auto_install = true,
+			highlight = { enable = true },
+			indent = { enable = true }
+		}
+
 
 		require("blink.cmp").setup {
 			fuzzy = {
