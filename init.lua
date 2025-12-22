@@ -14,7 +14,7 @@ vim.o.undofile = true
 vim.o.whichwrap = vim.o.whichwrap .. "<>[]hl"
 
 vim.pack.add({
-	{ src = "https://github.com/rose-pine/neovim",              name = "rose-pine" },
+	{ src = "https://github.com/rose-pine/neovim",                name = "rose-pine" },
 	"https://github.com/nvim-mini/mini.nvim",
 	"https://github.com/neovim/nvim-lspconfig",
 	"https://github.com/mason-org/mason.nvim",
@@ -25,8 +25,7 @@ vim.pack.add({
 
 
 
-require("rose-pine").setup({ styles = { transparency = true } })
-vim.cmd.colorscheme("rose-pine")
+
 vim.diagnostic.config({ virtual_text = true })
 
 vim.keymap.set("n", "da", vim.diagnostic.setqflist, { desc = "LSP: Diagnostics" })
@@ -98,3 +97,36 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.hl.on_yank()
 	end,
 })
+
+
+
+local function source_matugen()
+	local matugen_path = os.getenv("HOME") .. "/.config/nvim/matugen.lua" -- dofile doesn't expand $HOME or ~
+
+	local file, err = io.open(matugen_path, "r")
+	if err ~= nil then
+		require("rose-pine").setup({ styles = { transparency = true } })
+		vim.cmd.colorscheme("rose-pine")
+
+		-- Optionally print something to the user
+		vim.print(
+			"A matugen style file was not found, but that's okay! The colorscheme will dynamically change if matugen runs!")
+	else
+		dofile(matugen_path)
+		io.close(file)
+	end
+end
+
+local function auxiliary_function()
+	source_matugen()
+
+	-- Any other options you wish to set upon matugen reloads can also go here!
+	vim.api.nvim_set_hl(0, "Comment", { italic = true })
+end
+
+vim.api.nvim_create_autocmd("Signal", {
+	pattern = "SIGUSR1",
+	callback = auxiliary_function,
+})
+
+auxiliary_function()
