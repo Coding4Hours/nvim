@@ -20,10 +20,9 @@ vim.pack.add({
 	"https://github.com/mason-org/mason.nvim",
 	"https://github.com/mason-org/mason-lspconfig.nvim",
 	"https://github.com/saghen/blink.cmp",
+	"https://github.com/folke/snacks.nvim",
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" }
 })
-
-
 
 
 vim.diagnostic.config({ virtual_text = true })
@@ -33,6 +32,11 @@ vim.keymap.set("n", "rr", vim.lsp.buf.references, { desc = "LSP: References" })
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "LSP: Go to Declaration" })
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "LSP: Go to Definition" })
 vim.keymap.set("n", "ra", vim.lsp.buf.rename, { desc = "LSP: Rename" })
+
+vim.keymap.set("n", "<leader>.", "<cmd>lua Snacks.scratch()<cr>", { desc = "Toggle Scratch Buffer" })
+vim.keymap.set("n", "<leader>S", "<cmd>lua Snacks.scratch.select()<cr>", { desc = "Select Scratch Buffer" })
+
+
 
 vim.keymap.set({ "n", "x" }, "c", '"_c', { desc = "Cut without yanking" })
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
