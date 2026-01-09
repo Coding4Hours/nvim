@@ -1,0 +1,73 @@
+{
+  "plugins": {
+    "base16-nvim": {
+      "rev": "5378f802fc52c56f467560dbc3ea626ad06aaa79",
+      "src": "https://github.com/RRethy/base16-nvim"
+    },
+    "blink.cmp": {
+      "rev": "6a4914ca987453464a7dfc7fc237a992adb567d0",
+      "src": "https://github.com/saghen/blink.cmp"
+    },
+    "floatty.nvim": {
+      "rev": "e82ae3bbe46b8e28918bcf7b9f3d5c36304e0c9f",
+      "src": "https://github.com/ingur/floatty.nvim"
+    },
+    "jj-diffconflicts": {
+      "rev": "3fd00c8212ba3d7a933fbca270d8f0c8f0560789",
+      "src": "https://github.com/rafikdraoui/jj-diffconflicts"
+    },
+    "mason-lspconfig.nvim": {
+      "rev": "e5f73a9e3d271d449685f1059eb1868f4ba276f6",
+      "src": "https://github.com/mason-org/mason-lspconfig.nvim"
+    },
+    "mason-nvim-lint": {
+      "rev": "767b8ccdddaa977bec8987fd7507b9865a279235",
+      "src": "https://github.com/rshkarin/mason-nvim-lint"
+    },
+    "mason.nvim": {
+      "rev": "44d1e90e1f66e077268191e3ee9d2ac97cc18e65",
+      "src": "https://github.com/mason-org/mason.nvim"
+    },
+    "mini.nvim": {
+      "rev": "29b9e13f891f9c83f44ff5bf44d22daa1af1dc71",
+      "src": "https://github.com/nvim-mini/mini.nvim"
+    },
+    "nvim-lint": {
+      "rev": "ca6ea12daf0a4d92dc24c5c9ae22a1f0418ade37",
+      "src": "https://github.com/mfussenegger/nvim-lint"
+    },
+    "nvim-lspconfig": {
+      "rev": "92ee7d42320edfbb81f3cad851314ab197fa324a",
+      "src": "https://github.com/neovim/nvim-lspconfig"
+    },
+    "nvim-treesitter": {
+      "rev": "2ba5ec184609a96b513bf4c53a20512d64e27f39",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter",
+      "version": "'main'"
+    },
+    "rose-pine": {
+      "rev": "cf2a288696b03d0934da713d66c6d71557b5c997",
+      "src": "https://github.com/rose-pine/neovim"
+    },
+    "snacks.nvim": {
+      "rev": "fe7cfe9800a182274d0f868a74b7263b8c0c020b",
+      "src": "https://github.com/folke/snacks.nvim"
+    },
+    "tiny.basics": {
+      "rev": "9296755ec32bf166081e5fb9049d31ccf8f8434a",
+      "src": "https://github.com/nvim4hours/tiny.basics"
+    },
+    "tiny.treesitter": {
+      "rev": "50ba5b3db0338df1e0e61ed26f7d0b20c70b94ee",
+      "src": "https://github.com/nvim4hours/tiny.treesitter"
+    },
+    "utils.nvim": {
+      "rev": "925cd0b145a35c401b2221d59b27d13beff25900",
+      "src": "https://github.com/samsze0/utils.nvim"
+    },
+    "websocket.nvim": {
+      "rev": "06e6d62c72276f789420ad93c00ecd85ab9af218",
+      "src": "https://github.com/samsze0/websocket.nvim"
+    }
+  }
+}
