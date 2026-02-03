@@ -14,6 +14,7 @@ vim.pack.add({
 	-- tiny.nvim
 	"https://github.com/nvim4hours/tiny.basics",
 	"https://github.com/nvim4hours/tiny.treesitter",
+	"https://github.com/folke/sidekick.nvim",
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" }
 })
 
@@ -23,7 +24,6 @@ vim.keymap.set("n", "da", vim.diagnostic.setqflist, { desc = "LSP: Diagnostics" 
 vim.keymap.set("n", "rr", vim.lsp.buf.references, { desc = "LSP: References" })
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "LSP: Go to Declaration" })
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "LSP: Go to Definition" })
-vim.keymap.set("n", "ra", vim.lsp.buf.rename, { desc = "LSP: Rename" })
 
 
 
@@ -45,6 +45,8 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 require("mason").setup {}
 require("mason-lspconfig").setup {}
+
+require("sidekick").setup {}
 
 for _, name in ipairs({ "tabline", "icons", "surround", "pairs", "completion", "snippets", "cmdline" }) do
 	if name == "cmdline" then
@@ -90,3 +92,18 @@ vim.keymap.set({ 'n', 't' }, '<C-/>', function() term.toggle() end)
 
 require("tiny.basics").setup()
 require("tiny.treesitter").setup()
+
+
+vim.keymap.set("n", "<leader>aa", function() require("sidekick.cli").toggle() end, { desc = "Sidekick Toggle CLI" })
+
+vim.keymap.set("n", "<leader>af", function()
+	require("sidekick.cli").send({ msg = "{file}" })
+end, { desc = "Send File" })
+
+vim.keymap.set("x", "<leader>av", function()
+	require("sidekick.cli").send({ msg = "{selection}" })
+end, { desc = "Send Visual Selection" })
+
+vim.keymap.set({ "n", "x" }, "<leader>ap", function()
+	require("sidekick.cli").prompt()
+end, { desc = "Sidekick Select Prompt" })
